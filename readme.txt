@@ -16,20 +16,24 @@ For example, size means that how many times have clicked the tag, and color mean
 This is very simple way to display your tag-cloud more pretty and more highly decorative following the order.
 You can select color and size on ajax-based admin page.
 
-<a href="http://www.sujinc.com/lab/2d-tag-cloud-widget/">2D Tag Cloud by Sujin</a>
+Official Page : <a href="http://www.sujinc.com/lab/2d-tag-cloud-widget/">2D Tag Cloud by Sujin</a>
+Runnig Sample : <a href="http://www.sujinc.com/">Footer of sujinc.com</a>
 
 == Installation ==
 
+= Installation =
 1. Download the plugin zip package and extract it
 1. Put the folder named "two-dimensional-tag-cloud-sujin" under /wp-content/plugins/ directory
 1. Go to the plugins page in your Wordpress admin panel and click "Activate"
 
-
+= Setting - Global =
 1. Go to "2D Tag Cloud" under the "Settings"
 1. Set Tag Step and Method
 1. Changing the step selector, you'll see the step marker appearing or disappearing
 1. Click any step marker, and then set custom color and size
    * Higher-level step means more valued (View / Including)
+
+= Setting - Widget =
 1. Go to "Widgets" under the "Appearance" menu
 1. Drag "2D Tag Cloud Widget by Sujin" to the widget holder you want to set
 1. Set title, quantity and separator
@@ -46,8 +50,8 @@ No. You have to put our widget to your widget holder.
 == Screenshots ==
 
 1. Widget Setting
-2. Global Setting
-3. On your homepage
+2. Global Setting Page
+3. Result
 
 == Changelog ==
 
