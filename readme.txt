@@ -56,5 +56,8 @@ No. You have to put our widget to your widget holder.
 
 == Changelog ==
 
+= 1.1 =
+* Add preset config
+
 = 1.0 =
 * Original Version

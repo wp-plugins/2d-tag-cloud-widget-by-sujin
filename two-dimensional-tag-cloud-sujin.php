@@ -416,7 +416,13 @@ function sj2DTagSetting() {
 				</select>
 				<p class="desc label"></p>
 			</div>
-	
+
+			<div class="col_wrapper">
+				<label for="tag_method">Preset</label>
+				<a href="#" onclick="do_preset_4_white(); return false;">4 Step / White Background</a>
+				<p class="desc label"></p>
+			</div>
+
 			<div id="prev_wrapper">
 				<h2>Color</h2>
 				<ul id="tag_color_step">
@@ -474,7 +480,10 @@ function sj2DTagSetting() {
 				</div>
 			</div>
 
-			<p class="submit"><input type="submit" value="Save Changes" class="button button-primary" id="submit" name="submit"></p>
+			<p class="submit">
+				<input type="submit" value="Save Changes" class="button button-primary" id="submit" name="submit">
+				<a href="<?php echo $_SERVER['REQUEST_URI'] ?>" class="button">Cancel</a>
+			</p>
 		</form>
 	</div>
 	<?php

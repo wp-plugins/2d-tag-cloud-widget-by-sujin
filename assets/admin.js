@@ -205,3 +205,35 @@ function setStyle(selector) {
 		});
 	}
 }
+
+function do_preset_4_white() {
+	jQuery('#tag_step').val(4);
+	resetStep();
+	
+	jQuery('#tag_color_step_1').val('#cecece');
+	jQuery('#tag_bgcolor_step_1').val('');
+	jQuery('#tag_radius_step_1').val('');
+	jQuery('#tag_padding_step_1').val(0);
+
+	jQuery('#tag_color_step_2').val('#856797');
+	jQuery('#tag_bgcolor_step_2').val('');
+	jQuery('#tag_radius_step_2').val('');
+	jQuery('#tag_padding_step_2').val(0);
+
+	jQuery('#tag_color_step_3').val('#ffffff');
+	jQuery('#tag_bgcolor_step_3').val('#c9bbd2');
+	jQuery('#tag_radius_step_3').val(5);
+	jQuery('#tag_padding_step_3').val(3);
+
+	jQuery('#tag_color_step_4').val('#ffffff');
+	jQuery('#tag_bgcolor_step_4').val('#7629A3');
+	jQuery('#tag_radius_step_4').val(5);
+	jQuery('#tag_padding_step_4').val(3);
+
+	jQuery('#tag_size_step_1').val(12);
+	jQuery('#tag_size_step_2').val(16);
+	jQuery('#tag_size_step_3').val(21);
+	jQuery('#tag_size_step_4').val(26);
+
+	resetStep();
+}
