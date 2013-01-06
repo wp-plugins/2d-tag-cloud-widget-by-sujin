@@ -1,0 +1,56 @@
+#prev_wrapper h2 {clear:both;}
+#prev_wrapper ul li {float:left; margin-right:20px; cursor:pointer;}
+
+.modal {clear:both; background-color:#EEEEEE; border-radius:5px; padding:30px; display:none;}
+.wrap label {display:block; width:120px; float:left; margin-bottom:20px;}
+.col_wrapper {clear:both; margin-right:20px;}
+
+.iris-picker {margin:0 0 20px 120px;}
+.iris-picker .ui-slider {width:auto; height:auto; background:none;}
+.iris-picker .iris-slider-offset {border:0; bottom:0;}
+
+#color_wrapper .col_wrapper {float:left; clear:none;}
+
+.wrap .submit {clear:both;}
+
+.ui-spinner-up {top: 0;}
+.ui-spinner-button {
+    cursor: default;
+    display: block;
+    font-size: 0.5em;
+    height: 50%;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    width: 16px;
+}
+
+.ui-spinner .ui-icon { left: 0;
+    margin-top: -8px;
+    position: absolute;
+    top: 50%;}
+
+.ui-icon {height: 16px;
+    width: 16px;background-repeat: no-repeat;
+    display: block;
+    overflow: hidden;
+    }
+
+.ui-spinner-button {cursor: default;
+    font-size: 0.5em;
+    text-align: center;}
+
+.ui-spinner {
+    display: inline-block;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    vertical-align: middle;
+}
+
+.ui-spinner-down {
+    bottom: 0;
+}
