@@ -2,8 +2,8 @@
 /**
  * Plugin Name: 2D Tag Cloud by Sujin
  * Plugin URI: http://www.sujinc.com/2d-tag-cloud-widget/
- * Description: Generate 2-Dimentional Tag Cloud. For example, size representative hit count and color representative the count that tag includes.
- * Version: 1.1
+ * Description: This plugin is one of the WordPress widget, which makes tag-cloud with two visual value. 
+ * Version: 1.1.1
  * Author: Sujin Choi
  * Author URI: http://www.sujinc.com/
  * License: GPLv2 or later
@@ -231,7 +231,7 @@ class SJ_Widget_TagCloud extends WP_Widget {
 			$style.= 'border-radius:' . $tag_config['color'][$tag_color]['radius'] . 'px;';
 			$style.= 'padding:' . $tag_config['color'][$tag_color]['padding'] . ';';
 			$style.= 'font-size:' . $tag_config['size'][$tag_size] . 'px;';
-			$style.= 'margin-right:5px;';
+			$style.= 'margin:0 5px 10px 0; display:inline-block; line-height:1.3em; text-decoration:none;';
 
 			$tags_out[] = '<a href="' . $link . '" style="' . $style . '">' . $tag->tag_name . '</a>';
 		}
@@ -361,10 +361,6 @@ function sj2DTagSetting() {
 	wp_enqueue_script('jquery-ui-spinner');
 	
 	wp_enqueue_style('jquery-ui');
-	//wp_enqueue_style('wp-jquery-ui-button');
-//	wp_enqueue_style('wp-jquery-ui-spinner');
-//	wp_enqueue_style('wp-jquery-ui-dialog');
-	
 	wp_enqueue_script('iris'); 
 
 	wp_enqueue_script('sujin_tag', plugin_dir_url( __FILE__ ) . '/assets/admin.js');
