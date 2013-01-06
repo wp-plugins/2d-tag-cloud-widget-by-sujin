@@ -3,7 +3,7 @@
  * Plugin Name: 2D Tag Cloud by Sujin
  * Plugin URI: http://www.sujinc.com/2d-tag-cloud-widget/
  * Description: Generate 2-Dimentional Tag Cloud. For example, size representative hit count and color representative the count that tag includes.
- * Version: 1.0
+ * Version: 1.1
  * Author: Sujin Choi
  * Author URI: http://www.sujinc.com/
  * License: GPLv2 or later
