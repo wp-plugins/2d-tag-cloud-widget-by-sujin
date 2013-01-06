@@ -1,5 +1,6 @@
 === 2D Tag Cloud by Sujin ===
 Contributors: sujin2f
+Donate link: http://www.sujinc.com/lab/2d-tag-cloud-widget/
 Tags: tag, cloud
 Requires at least: 3.3
 Tested up to: 3.5
