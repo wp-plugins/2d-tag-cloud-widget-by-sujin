@@ -255,11 +255,7 @@ class SJ_Widget_TagCloud extends WP_Widget {
 			if (!empty($tag_config['size'][$tag_size]))
 				$style.= 'font-size:' . $tag_config['size'][$tag_size] . 'px;';
 
-			if ($i != 0) {
-				$style.= 'margin-left:' . $margin_right . 'px;';
-			}
-
-			$style.= 'margin-bottom:' . $margin_bottom . 'px; display:inline-block; line-height:' . $line_height . $line_height_unit . '; text-decoration:none;';
+			$style.= 'margin-right:' . $margin_right . 'px; margin-bottom:' . $margin_bottom . 'px; display:inline-block; line-height:' . $line_height . $line_height_unit . '; text-decoration:none;';
 
 			$tags_out[] = '<a id="sj_tag_' . $i . '" class="size_' . $tag_size . ' color_' . $tag_color . '" href="' . $link . '" style="' . $style . '">' . $tag->tag_name . '</a>';
 			$i++;
@@ -487,7 +483,7 @@ function sj2DTagSetting() {
 			</div>
 
 			<div class="col_wrapper">
-				<label for="margin_right">Left Margin</label>
+				<label for="margin_right">Right Margin</label>
 				<input id="margin_right" class="jquery-spinner" name="margin_right" value="<?php echo $margin_right ?>" />
 				<p class="desc label"></p>
 			</div>
