@@ -2,9 +2,9 @@
 Contributors: sujin2f
 Donate link: http://www.sujinc.com/lab/2d-tag-cloud-widget/
 Tags: tag, cloud
-Requires at least: 3.3
+Requires at least: 2.8
 Tested up to: 3.5
-Stable tag: 1.1.1
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,15 @@ No. You have to put our widget to your widget holder.
 3. Result
 
 == Changelog ==
+
+= 2.0 =
+* Fix some bugs.
+* Add more presetting.
+* Add line-height and margin setting.
+* Change setting view to table shape.
+* Add preview.
+* Add id and class key of tags. So you can make custom css.
+* Make to run at least Wordpress 2.8 version.
 
 = 1.1.1 =
 * Fix tag's output style (Add 'display:inline-block', line-height and margin). On next update, I'll put that function on user setting.
