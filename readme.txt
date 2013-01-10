@@ -4,7 +4,7 @@ Donate link: http://www.sujinc.com/lab/2d-tag-cloud-widget/
 Tags: tag, cloud
 Requires at least: 2.8
 Tested up to: 3.5
-Stable tag: 2.0
+Stable tag: 2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 "2D Tag Cloud by Sujin" is one of the Wordpress widget, which makes tag-cloud with two visual value.
 For example, size means that how many times have clicked the tag, and color means how many posts has had the tag.
 This is very simple way to display your tag-cloud more pretty and more highly decorative following the order.
-You can select color and size on ajax-based admin page.
+You can select color and size on admin page.
 
 Official Page : <a href="http://www.sujinc.com/lab/2d-tag-cloud-widget/">2D Tag Cloud by Sujin</a>
 
@@ -39,6 +39,7 @@ Running Sample : <a href="http://www.sujinc.com/">Footer of sujinc.com</a>
 1. Go to "Widgets" under the "Appearance" menu
 1. Drag "2D Tag Cloud Widget by Sujin" to the widget holder you want to set
 1. Set title, quantity and separator
+1. If you change sort setting, you will get a different shape of tag cloud.
 
 NOTE : At the early stage of applying this plugin, you cannot perceive a property of View step on your tag-cloud.
 When clicked the tag or displayed the post which has the tag, the View Counts will be increased.
@@ -56,6 +57,9 @@ No. You have to put our widget to your widget holder.
 3. Result
 
 == Changelog ==
+
+= 2.5 =
+* Make sort setting on widget section.
 
 = 2.0 =
 * Fix some bugs.

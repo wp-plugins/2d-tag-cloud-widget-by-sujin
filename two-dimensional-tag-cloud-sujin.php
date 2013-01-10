@@ -3,7 +3,7 @@
  * Plugin Name: 2D Tag Cloud by Sujin
  * Plugin URI: http://www.sujinc.com/2d-tag-cloud-widget/
  * Description: This plugin is one of the WordPress widget, which makes tag-cloud with two visual value. 
- * Version: 2.0
+ * Version: 2.5
  * Author: Sujin Choi
  * Author URI: http://www.sujinc.com/
  * License: GPLv2 or later
@@ -65,6 +65,7 @@ class SJ_Widget_TagCloud extends WP_Widget {
 		$number = isset($instance['number']) ? $instance['number'] : 20;
 		$title = isset($instance['title']) ? $instance['title'] : '';
 		$separator = isset($instance['separator']) ? $instance['separator'] : '';
+		$sort = isset($instance['sort']) ? $instance['sort'] : 'DESC';
 
 		echo $before_widget;
 		echo $before_title . apply_filters('widget_title', $title) . $after_title;
@@ -171,11 +172,16 @@ class SJ_Widget_TagCloud extends WP_Widget {
 					if ($k == $number) break;
 				}
 			}
+			
+			if ($sort == 'intersection') {
+				$j = $number - $i;
+			} else {
+				$j = $i;
+			}
 
-
-			if (isset($tags_hit[$i])) {
-				$tags[$tags_hit[$i]->term_id] = $tags_hit[$i];
-				if (!isset($tags[$tags_hit[$i]->term_id])) {
+			if (isset($tags_hit[$j])) {
+				$tags[$tags_hit[$j]->term_id] = $tags_hit[$j];
+				if (!isset($tags[$tags_hit[$j]->term_id])) {
 					$k++;
 					if ($k == $number) break;
 				}
@@ -227,6 +233,17 @@ class SJ_Widget_TagCloud extends WP_Widget {
 			$i++;
 		}
 
+		if ($sort == 'name') {
+			$new_tag = array();
+
+			foreach ($tags as $tag) {
+				$new_tag[strtolower($tag->tag_name)] = $tag;
+			}
+
+			ksort($new_tag);
+			$tags = $new_tag;
+		}
+
 		# 준비는 끝났다 +_+ 이제 녀석들을 만들어보자
 		$i = 0;
 		foreach ($tags as $tag) {
@@ -271,6 +288,7 @@ class SJ_Widget_TagCloud extends WP_Widget {
 		$instance['number'] = $new_instance['number'];
 		$instance['title'] = $new_instance['title'];
 		$instance['separator'] = $new_instance['separator'];
+		$instance['sort'] = $new_instance['sort'];
 
 		return $instance;
 	} // function update($new_instance, $old_instance)
@@ -279,22 +297,33 @@ class SJ_Widget_TagCloud extends WP_Widget {
 		$number = isset($instance['number']) ? $instance['number'] : 20;
 		$title = isset($instance['title']) ? $instance['title'] : '';
 		$separator = isset($instance['separator']) ? $instance['separator'] : '';
+		$sort = isset($instance['sort']) ? $instance['sort'] : 'DESC';
 
 		?>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('title'); ?>">Title</label>
-				<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+				<label for="<?php echo $this->get_field_id('title'); ?>">Title :</label>
+				<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" class="widefat" />
 			</p>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('number'); ?>">Number of tags to show</label>
-				<input id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo $number; ?>" />
+				<label for="<?php echo $this->get_field_id('number'); ?>">Number of tags to show :</label>
+				<input id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo $number; ?>" class="widefat" />
 			</p>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('separator'); ?>">Separator</label>
-				<input class="" id="<?php echo $this->get_field_id('separator'); ?>" name="<?php echo $this->get_field_name('separator'); ?>" type="text" value="<?php echo $separator; ?>" />
+				<label for="<?php echo $this->get_field_id('separator'); ?>">Separator :</label>
+				<input id="<?php echo $this->get_field_id('separator'); ?>" name="<?php echo $this->get_field_name('separator'); ?>" type="text" value="<?php echo $separator; ?>" class="widefat" />
+			</p>
+
+			<p>
+				<label>Sort :</label>
+
+				<select name="<?php echo $this->get_field_name('sort'); ?>" class="widefat">
+					<option value="DESC" <?php if ($sort == 'DESC') echo 'selected="selected"' ?>>Put tags by descending order</option>
+					<option value="intersection" <?php if ($sort == 'intersection') echo 'selected="selected"' ?>>Put tags 1 by 1. bigger, smaller, bigger, smaller...</option>
+					<option value="name" <?php if ($sort == 'name') echo 'selected="selected"' ?>>Sort by name</option>
+				</select>
 			</p>
 
 		<?php
