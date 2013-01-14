@@ -4,7 +4,7 @@ Donate link: http://www.sujinc.com/lab/2d-tag-cloud-widget/
 Tags: tag, cloud
 Requires at least: 2.8
 Tested up to: 3.5
-Stable tag: 2.5
+Stable tag: 2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,6 +57,9 @@ No. You have to put our widget to your widget holder.
 3. Result
 
 == Changelog ==
+
+= 2.6 =
+* Fix option-saving bug with some system.
 
 = 2.5 =
 * Make sort setting on widget section.

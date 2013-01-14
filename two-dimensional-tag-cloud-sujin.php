@@ -3,7 +3,7 @@
  * Plugin Name: 2D Tag Cloud by Sujin
  * Plugin URI: http://www.sujinc.com/2d-tag-cloud-widget/
  * Description: This plugin is one of the WordPress widget, which makes tag-cloud with two visual value. 
- * Version: 2.5
+ * Version: 2.6
  * Author: Sujin Choi
  * Author URI: http://www.sujinc.com/
  * License: GPLv2 or later
@@ -384,7 +384,7 @@ function sj2DTagAddSettingPage() {
 }
 
 function sj2DTagSetting() {
-	if ($_POST['submit'] == 'Save Changes') {
+	if ($_POST['action'] == 'update' && check_admin_referer('sj-admin-tag')) {
 		$tag_step = $_POST['tag_step'];
 		$tag_method = $_POST['tag_method'];
 		$setting_method = $_POST['setting_method'];
@@ -478,7 +478,11 @@ function sj2DTagSetting() {
 			<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 		</form>
 
-		<form action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="post">
+		<form method="post">
+			<input type="hidden" value="2D-tag-cloud-options" name="option_page">
+			<input type="hidden" value="update" name="action">
+			<?php wp_nonce_field('sj-admin-tag') ?>
+
 			<div class="col_wrapper">
 				<label for="tag_step">Tag Step</label>
 				<input id="tag_step" class="jquery-spinner" name="tag_step" value="<?php echo $tag_step ?>" />
