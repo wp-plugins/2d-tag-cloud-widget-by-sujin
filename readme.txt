@@ -33,38 +33,35 @@ Running Sample : <a href="http://www.sujinc.com/">Footer of sujinc.com / 제 블
 == Installation ==
 
 = Installation =
-1. Download the plugin zip package and extract it
-플러그인을 다운로드하여 압축을 해제해주세요.
-1. Put the folder named "two-dimensional-tag-cloud-sujin" under /wp-content/plugins/ directory
-플러그인 디렉토리에 넣어주세요.
-1. Go to the plugins page in your Wordpress admin panel and click "Activate"
-플러그인 관리 페이지에서 활성화 시키세요.
+1. Download the plugin zip package and extract it (플러그인을 다운로드하여 압축을 해제해주세요)
+1. Put the folder named "two-dimensional-tag-cloud-sujin" under /wp-content/plugins/ directory (플러그인 디렉토리에 넣어주세요)
+1. Go to the plugins page in your Wordpress admin panel and click "Activate" (플러그인 관리 페이지에서 활성화 시키세요)
 
 = Global Setting =
-1. Go to "2D Tag Cloud" under the "Settings" / 세팅의 "2D Tag Cloud"로 이동해주세요.
-1. Set Tag Step and Method / Step과 Method를 설정해주세요.
-1. Changing the step selector, you'll see the step marker appearing or disappearing / Step을 바꾸시면 표가 늘었다 줄었다 하는 걸 보실 수 있어요.
-1. On step marker, set custom color and size / 색상과 크그를 설정하세요.
-   * Higher-level step means more valued (View / Including) / 높은 숫자의 Step의 스타일대로 많이 포함되거나 많이 클릭된 태그가 표시됩니다.
-1. Click "Make Preview" to preview your tag cloud. / Make Preview 버튼을 클릭하셔서 미리보기를 하실 수 있어요.
+1. Go to "2D Tag Cloud" under the "Settings" (세팅의 "2D Tag Cloud"로 이동해주세요)
+1. Set Tag Step and Method (Step과 Method를 설정해주세요)
+1. Changing the step selector, you'll see the step marker appearing or disappearing (Step을 바꾸시면 표가 늘었다 줄었다 하는 걸 보실 수 있어요)
+1. On step marker, set custom color and size (색상과 크기를 설정하세요)
+   * Higher-level step means more valued (View / Including) (높은 숫자의 Step의 스타일대로 많이 포함되거나 많이 클릭된 태그가 표시됩니다)
+1. Click "Make Preview" to preview your tag cloud. (Make Preview 버튼을 클릭하셔서 미리보기를 하실 수 있어요)
 
 = Widget Setting =
-1. Go to "Widgets" under the "Appearance" menu / 위젯 메뉴로 가세요
-1. Drag "2D Tag Cloud Widget by Sujin" to the widget holder you want to set / 위젯을 끌어다 놓습니다.
-1. Set title, quantity and separator / 타이틀과 태그의 수량과 구분자를 입력하실 수 있어요.
-1. If you change sort setting, you will get a different shape of tag cloud. / Sort를 변경해서 태그의 정렬 방법을 결정하실 수 있어요.
+1. Go to "Widgets" under the "Appearance" menu (위젯 메뉴로 가세요)
+1. Drag "2D Tag Cloud Widget by Sujin" to the widget holder you want to set (위젯을 끌어다 놓습니다)
+1. Set title, quantity and separator (타이틀과 태그의 수량과 구분자를 입력하실 수 있어요)
+1. If you change sort setting, you will get a different shape of tag cloud. (Sort를 변경해서 태그의 정렬 방법을 결정하실 수 있어요)
 
 NOTE : At the early stage of applying this plugin, you cannot perceive a property of View step on your tag-cloud.
 When clicked the tag or displayed the post which has the tag, the View Counts will be increased.
+
 주의 : 플러그인을 설치하신 딱! 고 당시에는 클릭 수로 설정된 요소(크기나 색상)가 모두 똑같을 거에요. 워드프레스는 포스트의 View를 세거나 하는 기능이 없어요.
 많은 사람들이 여러분의 블로그를 방문해서 태그를 클릭하거나 태그가 포함된 포스트를 보면 따로 설정한 카운트가 올라가면서 그 요소가 변경될 거에요~ :)
 
 == Frequently Asked Questions ==
 
-= Will this plugin replace previous tag cloud? / 이전 태그 클라우드가 변경되나요? =
+= Will this plugin replace previous tag cloud? (이전 태그 클라우드가 변경되나요?) =
 
-No. You have to put our widget to your widget holder.
-아뇨. 위젯 홀더에 따로 준비된 위젯을 넣어주세요.
+No. You have to put our widget to your widget holder. (아뇨. 위젯 홀더에 따로 준비된 위젯을 넣어주세요.)
 
 == Shortcode ==
 
@@ -74,9 +71,12 @@ shortcode is [tag2d] you can controll with 3 attributes.
 * number : Number of tags to show. You MUST set numeric value.
 * separator : Put separator in between each tag.
 * sort : You can set a sort to one of those three value.
-** intersection : This plugin sort tags on 2-way (Click count and Having count). And put tags cross by different order (Bigger, Smaller, Bigger, Smaller...)
-** DESC : Same as 'intersection', but put tags by descending order (Bigger, Bigger, Bigger, Bigger...)
-** name : Put tags by name.
+
+ - intersection : This plugin sort tags on 2-way (Click count and Having count). And put tags cross by different order (Bigger, Smaller, Bigger, Smaller...)
+
+ - DESC : Same as 'intersection', but put tags by descending order (Bigger, Bigger, Bigger, Bigger...)
+
+ - name : Put tags by name.
 
 == Shortcode (Kor) ==
 
@@ -86,9 +86,12 @@ shortcode is [tag2d] you can controll with 3 attributes.
 * number : 태그의 표시 수에요.
 * separator : 태그 사이에 넣을 구분자죠.
 * sort : 아래 세 개의 값 중 하나를 넣으세요.
-** intersection : 크고 작은 값을 하나씩 교차해서 표시해요. 포함 많은 것, 클릭 적은 것, 포함 그 다음으로 많은 것, 클릭 그 다음으로 적은 것...
-** DESC : 큰 값을 먼저 표시해요. 포함 많은 것, 클릭 많은 것, 포함 많은 것, 클릭 많은 것...
-** name : 이름에 따라 정렬합니다.
+
+ - intersection : 크고 작은 값을 하나씩 교차해서 표시해요. 포함 많은 것, 클릭 적은 것, 포함 그 다음으로 많은 것, 클릭 그 다음으로 적은 것...
+
+ - DESC : 큰 값을 먼저 표시해요. 포함 많은 것, 클릭 많은 것, 포함 많은 것, 클릭 많은 것...
+
+ - name : 이름에 따라 정렬합니다.
 
 
 == Screenshots ==
@@ -100,12 +103,9 @@ shortcode is [tag2d] you can controll with 3 attributes.
 == Changelog ==
 
 = 2.7 =
-* Set style using css file, not a inline-style. So the style in this plugin will ignore global css.
-* 인라인 스타일이 아닌 CSS를 따로 빼서 설정해요. a 태그 같은 경우엔 때론 전역 세팅이 붙기도 해서요.
-* Add Korean to readme.txt file.
-* readme.txt에 한국어를 추가했어요. 제 맘이죠 뭐.
-* You can use a shortcode in your post/page or php file.
-* 숏코드를 추가했어요.
+* Set style using css file, not a inline-style. So the style in this plugin will ignore global css. (인라인 스타일이 아닌 CSS를 따로 빼서 설정해요. a 태그 같은 경우엔 때론 전역 세팅이 붙기도 해서요.)
+* Add Korean to readme.txt file. (readme.txt에 한국어를 추가했어요. 전 참 대단한 애국자에요.)
+* You can use a shortcode in your post/page or php file. (숏코드를 추가했어요.)
 
 = 2.6 =
 * Fix option-saving bug with some system.
