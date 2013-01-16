@@ -104,7 +104,7 @@ shortcode is [tag2d] you can controll with 3 attributes.
 
 = 2.7 =
 * Set style using css file, not a inline-style. So the style in this plugin will ignore global css. (인라인 스타일이 아닌 CSS를 따로 빼서 설정해요. a 태그 같은 경우엔 때론 전역 세팅이 붙기도 해서요.)
-* Add Korean to readme.txt file. (readme.txt에 한국어를 추가했어요. 전 참 대단한 애국자에요.)
+* Add Korean to readme.txt file. (readme.txt에 한국어를 추가했어요. 전 참 대단한 애국자에요)
 * You can use a shortcode in your post/page or php file. (숏코드를 추가했어요.)
 
 = 2.6 =
