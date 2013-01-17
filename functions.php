@@ -526,6 +526,11 @@ class sj2DTag {
 				<input type="hidden" value="update" name="action">
 				<input type="hidden" value="<?php echo $this->set_number ?>" name="set_current_id">
 				<input type="hidden" value="<?php echo $this->set_name ?>" name="set_current_name">
+
+				<input type="hidden" value="<?php _e('Step', $this->text_domain); ?>" id="text_of_step">
+				<input type="hidden" value="<?php _e('You cannot delete the default set.', $this->text_domain); ?>" id="text_of_delete_alert">
+				<input type="hidden" value="<?php _e('Do you really want to delete this set?', $this->text_domain); ?>" id="text_of_delete_confirm">
+				<input type="hidden" value="<?php _e('You must fill a set name.', $this->text_domain); ?>" id="text_of_make_alert">
 		
 				<?php wp_nonce_field($this->text_domain) ?>
 		

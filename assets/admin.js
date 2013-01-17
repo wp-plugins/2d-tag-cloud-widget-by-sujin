@@ -93,7 +93,7 @@ function sjResetStep() {
 
 			// 아이디 바꾸고, 글 바꾸고
 			jQuery('#sjTagTable thead tr th:last').attr('id', 'tag_step_' + targetId + '_preview');
-			jQuery('#sjTagTable thead tr th:last').html('<span>Step ' + targetId + '</span>');
+			jQuery('#sjTagTable thead tr th:last').html('<span>' + jQuery('#text_of_step').val() + ' ' + targetId + '</span>');
 
 			// 인풋 바꾸고
 			jQuery('#sjTagTable tbody tr').each(function() {
@@ -270,11 +270,11 @@ function do_preset_4_black() {
 
 function delete_set(set_num) {
 	if (set_num == 0) {
-		alert ('You cannot delete the default set.');
+		alert (jQuery('#text_of_delete_alert').val());
 		return false;
 	}
 
-	if (confirm('Do you really want to delete this set?')) {
+	if (confirm(jQuery('#text_of_delete_confirm').val())) {
 		jQuery('input[name="action"]').val("delete");
 		jQuery('input[name="set_current_id"]').val(set_num);
 		jQuery('#submit').trigger('click');
@@ -283,7 +283,7 @@ function delete_set(set_num) {
 
 function make_set() {
 	if (!jQuery('#set_name').val()) {
-		alert('You must fill a set name');
+		alert(jQuery('#text_of_make_alert').val());
 		return false;
 	}
 
