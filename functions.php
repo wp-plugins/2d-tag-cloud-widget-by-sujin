@@ -682,7 +682,9 @@ class sj2DTag {
 						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Phonology</a>, 
 					</div>
 				</div>
-		
+
+				<p><?php printf(__('You can use a shortcode also please see <a href="http://wordpress.org/extend/plugins/2d-tag-cloud-widget-by-sujin/other_notes/" target="_blank">%s</a>', $this->text_domain), __('this page', $this->text_domain)); ?></p>
+
 				<p class="submit">
 					<input type="submit" value="<?php _e('Save Changes', $this->text_domain); ?>" class="button button-primary" id="submit" name="submit">
 					<a href="<?php echo $_SERVER['REQUEST_URI'] ?>" class="button"><?php _e('Cancel', $this->text_domain); ?></a>
