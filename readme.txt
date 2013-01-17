@@ -106,7 +106,7 @@ shortcode is [tag2d] you can controll with 3 attributes.
 
 = 3.0 =
 * Convert functions to class. It will prevent a duplicate error. (클래스 기반으로 변경했어요. 에러를 없애고 코드를 다이어트 했죠.)
-* 
+* Support multi-language. (다국어 추가했어요.)
 
 = 2.8 =
 * Fix Critical Bug. You MUST Update! (2.7에서 업데이트 해주세요!)
