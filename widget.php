@@ -6,9 +6,11 @@ class SJ_Widget_TagCloud extends WP_Widget {
 	public $widget_title;
 
 	function __construct() {
+		global $sj2DTag;
+
 		$this->widget_id = 'tag_cloud_widget_sujin';
-		$this->widget_name = '2D Tag Cloud Widget by Sujin';
-		$this->widget_title = '2D Tag Cloud Widget by Sujin';
+		$this->widget_name = __('2D Tag Cloud Widget by Sujin', $sj2DTag->text_domain);
+		$this->widget_title = __('2D Tag Cloud Widget by Sujin', $sj2DTag->text_domain);
 
 		$widget_ops = array(
 			'classname' => $this->widget_id,

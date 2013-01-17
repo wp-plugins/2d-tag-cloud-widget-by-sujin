@@ -13,7 +13,7 @@ class sj2DTag {
 	private $sort_by;
 
 	static $instance = false;
-	static $text_domain = '2d-tag-cloud-widget-by-sujin';
+	public $text_domain = 'sujin-2d-tag-cloud';
 
 	protected function __construct() {
 		global $wpdb;
@@ -104,8 +104,8 @@ class sj2DTag {
 	}
 
 	public function load_plugin_textdomain() {
-		$plugin_dir = basename(dirname(__FILE__)) . '/languages/';
-		load_plugin_textdomain($this->text_domain, false, $plugin_dir );
+		$lang_dir = basename(dirname(__FILE__)) . '/languages';
+		load_plugin_textdomain($this->text_domain, 'wp-content/plugins/' . $lang_dir, $lang_dir);
 	}
 
 	# 태그클라우드를 뽑아요!
@@ -383,7 +383,7 @@ class sj2DTag {
 	}
 
 	public function trigget_admin_menu() {
-		add_options_page('2D Tag Cloud', '2D Tag Cloud', 'manage_options', '2D-tag-cloud-options', array(&$this, 'admin_menu'));
+		add_options_page(__('2D Tag Cloud', $this->text_domain), __('2D Tag Cloud', $this->text_domain), 'manage_options', '2D-tag-cloud-options', array(&$this, 'admin_menu'));
 	}
 	
 	public function admin_menu() {
