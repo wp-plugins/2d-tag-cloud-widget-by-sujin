@@ -7,13 +7,12 @@
  * Author: Sujin 수진 Choi 최
  * Author URI: http://www.sujinc.com/
  * License: GPLv2 or later
- * Text Domain: tag-cloud-widget-sujin
+ * Text Domain: 2d-tag-cloud-widget-by-sujin
  */
 
 global $sj_tag_db_version;
 $sj_tag_db_version = "1.0";
 
 require_once('functions.php');
-require_once('admin_setting.php');
 require_once('widget.php');
 require_once('shorttag.php');

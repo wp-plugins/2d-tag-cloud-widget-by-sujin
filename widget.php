@@ -24,7 +24,7 @@ class SJ_Widget_TagCloud extends WP_Widget {
 	}
 
 	function widget($args, $instance) {
-		global $wpdb;
+		global $wpdb, $sj2DTag;
 
 		extract($args, EXTR_SKIP);
 
@@ -34,15 +34,13 @@ class SJ_Widget_TagCloud extends WP_Widget {
 		$sort = isset($instance['sort']) ? $instance['sort'] : 'DESC';
 		$set = isset($instance['set_id']) ? $instance['set_id'] : 0;
 
+		$sj2DTag->set_by_number($set);
+		$sj2DTag->set_cloud_option($number, $separator, $sort);
+
 		echo $before_widget;
 		echo $before_title . apply_filters('widget_title', $title) . $after_title;
-
-		$tags_out = sjGetTags($number, $separator, $sort, $set);
-
-		echo '<div class="tag_cloud sj_tagcloud_set_' . $set . '">' . $tags_out . '</div>';
+		echo $sj2DTag->get_tag_cloud();
 		echo $after_widget;
-
-		echo '<style>' . sjPrintCSS($set) . '</style>';
 	} // function widget($args, $instance)
 
 	function update($new_instance, $old_instance) {

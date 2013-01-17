@@ -4,7 +4,7 @@ Donate link: http://www.sujinc.com/lab/2d-tag-cloud-widget/
 Tags: tag, cloud
 Requires at least: 2.8
 Tested up to: 3.5
-Stable tag: 2.8
+Stable tag: 3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,10 @@ shortcode is [tag2d] you can controll with 3 attributes.
 3. Result / 결과
 
 == Changelog ==
+
+= 3.0 =
+* Convert functions to class. It will prevent a duplicate error. (클래스 기반으로 변경했어요. 에러를 없애고 코드를 다이어트 했죠.)
+* 
 
 = 2.8 =
 * Fix Critical Bug. You MUST Update! (2.7에서 업데이트 해주세요!)
