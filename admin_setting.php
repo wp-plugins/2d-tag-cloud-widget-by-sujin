@@ -6,54 +6,65 @@ function sj2DTagAddSettingPage() {
 add_action('admin_menu', 'sj2DTagAddSettingPage');
 
 function sj2DTagSetting() {
+	# Save Setting
+	# 세팅을 저장합니다.
 	if ($_POST['action'] == 'update' && check_admin_referer('sj-admin-tag')) {
-		$tag_step = $_POST['tag_step'];
-		$tag_method = $_POST['tag_method'];
-		$setting_method = $_POST['setting_method'];
-
-		$line_height = $_POST['line_height'];
-		$line_height_unit = $_POST['line_height_unit'];
-		$margin_right = $_POST['margin_right'];
-		$margin_bottom = $_POST['margin_bottom'];
-
-		$tag_config = array();
-
-		for($i = 1; $i < $_POST['tag_step']+1; $i++) {
-			$tag_config['color'][$i] = array(
-				'color' => $_POST['tag_color_step_' . $i],
-				'bgcolor' => $_POST['tag_bgcolor_step_' . $i],
-				'radius' => $_POST['tag_radius_step_' . $i],
-				'padding' => $_POST['tag_padding_step_' . $i]
-			);
-
-			$tag_config['size'][$i] =$_POST['tag_size_step_' . $i];
-		}
-		
-		$tag_config = array(
-			'tag_step' => $tag_step,
-			'tag_method' => $tag_method,
-			'tag_config' => $tag_config,
-			'setting_method' => $setting_method,
-			'line_height' => $line_height,
-			'line_height_unit' => $line_height_unit,
-			'margin_right' => $margin_right,
-			'margin_bottom' => $margin_bottom,
-		);
-		update_option('sj_tag_conifg', $tag_config);
+		sjTagSaveSetAdmin($_POST['set_current_id']);
 	}
-	
-	$tag_config = get_option('sj_tag_conifg');
+
+	# 새로운 셋을 만듭니다.
+	# Make new set.
+	if ($_POST['action'] == 'makenew' && check_admin_referer('sj-admin-tag')) {
+		$set_name = $_POST['set_name'];
+
+		$tag_set = get_option('sj_tag_set');
+		if (!$tag_set) $tag_set = array(0 => 'Default Set');
+		$tag_set[] = $set_name;
+
+		update_option('sj_tag_set', $tag_set);
+
+		end($tag_set);
+		$set_num = key($tag_set);
+		sjTagSaveSetAdmin($set_num);
+
+		echo '<script>window.location="' . get_site_url() . '/wp-admin/options-general.php?page=2D-tag-cloud-options&set=' . $set_num . '"</script>';
+		die;
+	}
+
+	# 셋을 삭제합니다..
+	# Delete set.
+	if ($_POST['action'] == 'delete' && check_admin_referer('sj-admin-tag')) {
+		$set_id = $_POST['set_current_id'];
+		if ($set_id != 0) {
+			$tag_set = get_option('sj_tag_set');
+			unset($tag_set[$set_id]);
+			update_option('sj_tag_set', $tag_set);
+			delete_option('sj_tag_conifg_' . $set_id);
+
+			echo '<script>window.location="' . get_site_url() . '/wp-admin/options-general.php?page=2D-tag-cloud-options"</script>';
+			die;
+		}
+	}
+
+	# Get by set
+	$current_set_num = isset($_GET['set']) ? $_GET['set'] : 0;
+	$current_set = ($_GET['set'] != 0) ? 'sj_tag_conifg_' . $_GET['set'] : 'sj_tag_conifg';
+	$tag_config = get_option($current_set);
 
 	# initialize;;
 	$config = sjParseOptions($tag_config);
 	$tag_config = $config['tag_config'];
 	extract($config, EXTR_SKIP);
 
-	if (!$line_height) $line_height = 1.3;
-	if (!$line_height_unit) $line_height_unit = 'em';
-	if (!$margin_right) $margin_right = 5;
-	if (!$margin_bottom) $margin_bottom = 10;
+	extract(shortcode_atts(array(
+		'line_height' => 1.3,
+		'line_height_unit' => 'em',
+		'margin_right' => 5,
+		'margin_bottom' => 10
+	), $config), EXTR_SKIP);
 
+	$tag_set = get_option('sj_tag_set');
+	if (!$tag_set) $tag_set = array(0 => 'Default Set');
 	?>
 
 	<div class="wrap sjTag">
@@ -66,10 +77,37 @@ function sj2DTagSetting() {
 			<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 		</form>
 
-		<form method="post">
+		<form method="post" id="sjTagForm">
 			<input type="hidden" value="2D-tag-cloud-options" name="option_page">
 			<input type="hidden" value="update" name="action">
+			<input type="hidden" value="<?php echo $current_set_num ?>" name="set_current_id">
+			<input type="hidden" value="<?php echo $current_set ?>" name="set_current_name">
+
 			<?php wp_nonce_field('sj-admin-tag') ?>
+
+			<div class="col_wrapper">
+				<label for="tag_set">Set</label>
+				<select id="tag_set" name="tag_set">
+
+					<?php foreach($tag_set as $key=>$value) { ?>
+
+					<option value="<?php echo $key ?>" <?php if ($key == $current_set_num) echo 'selected="selected"' ?>><?php echo $value ?></option>
+
+					<?php } ?>
+
+				</select>
+				
+				<script>
+				jQuery('#tag_set').bind('change', function() {
+					window.location = window.location.pathname + '?page=2D-tag-cloud-options&set=' + jQuery(this).val();
+				});
+				</script>
+
+				<a href="#" onclick="delete_set(<?php echo $current_set_num ?>); return false;" class="button">Delete this set</a>
+				<input id="set_name" name="set_name" />
+				<a href="#" onclick="make_set(); return false;" class="button">Make new set</a>
+				<p class="desc label">You can't delete default set. If you delete the set, which is used by widget, it will be shown as default set.</p>
+			</div>
 
 			<div class="col_wrapper">
 				<label for="tag_step">Tag Step</label>

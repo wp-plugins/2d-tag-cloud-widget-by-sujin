@@ -4,7 +4,7 @@ Donate link: http://www.sujinc.com/lab/2d-tag-cloud-widget/
 Tags: tag, cloud
 Requires at least: 2.8
 Tested up to: 3.5
-Stable tag: 2.7
+Stable tag: 2.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,7 @@ shortcode is [tag2d] you can controll with 3 attributes.
 
 * number : Number of tags to show. You MUST set numeric value.
 * separator : Put separator in between each tag.
+* set : Put set name.
 * sort : You can set a sort to one of those three value.
 
  - intersection : This plugin sort tags on 2-way (Click count and Having count). And put tags cross by different order (Bigger, Smaller, Bigger, Smaller...)
@@ -85,6 +86,7 @@ shortcode is [tag2d] you can controll with 3 attributes.
 
 * number : 태그의 표시 수에요.
 * separator : 태그 사이에 넣을 구분자죠.
+* set : 저장한 세팅 값을 넣어주세요.
 * sort : 아래 세 개의 값 중 하나를 넣으세요.
 
  - intersection : 크고 작은 값을 하나씩 교차해서 표시해요. 포함 많은 것, 클릭 적은 것, 포함 그 다음으로 많은 것, 클릭 그 다음으로 적은 것...
@@ -101,6 +103,10 @@ shortcode is [tag2d] you can controll with 3 attributes.
 3. Result / 결과
 
 == Changelog ==
+
+= 2.8 =
+* Fix Critical Bug. You MUST Update! (2.7에서 업데이트 해주세요!)
+* Add a function, which you can save your setting as separate set. (세팅을 따로 저장할 수 있어요~)
 
 = 2.7 =
 * Set style using css file, not a inline-style. So the style in this plugin will ignore global css. (인라인 스타일이 아닌 CSS를 따로 빼서 설정해요. a 태그 같은 경우엔 때론 전역 세팅이 붙기도 해서요.)

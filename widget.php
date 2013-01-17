@@ -32,14 +32,17 @@ class SJ_Widget_TagCloud extends WP_Widget {
 		$title = isset($instance['title']) ? $instance['title'] : '';
 		$separator = isset($instance['separator']) ? $instance['separator'] : '';
 		$sort = isset($instance['sort']) ? $instance['sort'] : 'DESC';
+		$set = isset($instance['set_id']) ? $instance['set_id'] : 0;
 
 		echo $before_widget;
 		echo $before_title . apply_filters('widget_title', $title) . $after_title;
 
-		$tags_out = sjGetTags($number, $separator, $sort);
+		$tags_out = sjGetTags($number, $separator, $sort, $set);
 
-		echo '<div class="tag_cloud">' . $tags_out . '</div>';
+		echo '<div class="tag_cloud sj_tagcloud_set_' . $set . '">' . $tags_out . '</div>';
 		echo $after_widget;
+
+		echo '<style>' . sjPrintCSS($set) . '</style>';
 	} // function widget($args, $instance)
 
 	function update($new_instance, $old_instance) {
@@ -49,6 +52,7 @@ class SJ_Widget_TagCloud extends WP_Widget {
 		$instance['title'] = $new_instance['title'];
 		$instance['separator'] = $new_instance['separator'];
 		$instance['sort'] = $new_instance['sort'];
+		$instance['set_id'] = $new_instance['set_id'];
 
 		return $instance;
 	} // function update($new_instance, $old_instance)
@@ -58,12 +62,29 @@ class SJ_Widget_TagCloud extends WP_Widget {
 		$title = isset($instance['title']) ? $instance['title'] : '';
 		$separator = isset($instance['separator']) ? $instance['separator'] : '';
 		$sort = isset($instance['sort']) ? $instance['sort'] : 'DESC';
+		$current_set_num = isset($instance['set_id']) ? $instance['set_id'] : 0;
+
+		$tag_set = get_option('sj_tag_set');
+		if (!$tag_set) $tag_set = array(0 => 'Default Set');
 
 		?>
 
 			<p>
 				<label for="<?php echo $this->get_field_id('title'); ?>">Title :</label>
 				<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" class="widefat" />
+			</p>
+
+			<p>
+				<label for="<?php echo $this->get_field_id('set_id'); ?>">Set :</label>
+				<select id="<?php echo $this->get_field_id('set_id'); ?>" name="<?php echo $this->get_field_name('set_id'); ?>">
+
+					<?php foreach($tag_set as $key=>$value) { ?>
+
+					<option value="<?php echo $key ?>" <?php if ($key == $current_set_num) echo 'selected="selected"' ?>><?php echo $value ?></option>
+
+					<?php } ?>
+
+				</select>
 			</p>
 
 			<p>

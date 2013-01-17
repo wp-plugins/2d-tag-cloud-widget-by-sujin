@@ -267,3 +267,29 @@ function do_preset_4_black() {
 	sjResetStep();
 	sjSetPreview();
 }
+
+function delete_set(set_num) {
+	if (set_num == 0) {
+		alert ('You cannot delete the default set.');
+		return false;
+	}
+
+	if (confirm('Do you really want to delete this set?')) {
+		jQuery('input[name="action"]').val("delete");
+		jQuery('input[name="set_current_id"]').val(set_num);
+		jQuery('#submit').trigger('click');
+	}
+}
+
+function make_set() {
+	if (!jQuery('#set_name').val()) {
+		alert('You must fill a set name');
+		return false;
+	}
+
+	jQuery('input[name="action"]').val("makenew");
+	jQuery('#sjTagForm').attr('action', jQuery('input[name="_wp_http_referer"]').val());
+	jQuery('#submit').trigger('click');
+
+	return true;
+}

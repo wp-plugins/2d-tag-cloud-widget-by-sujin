@@ -78,14 +78,17 @@ function sj2DTagAdminEnqueueScripts() {
 }
 add_action('admin_enqueue_scripts', 'sj2DTagAdminEnqueueScripts');
 
+/*
 function sj2DTagEnqueue() {
 	wp_enqueue_style('sujin_tag_front', get_bloginfo('wpurl') . '/?sj_tag_styles=1');
 	
 }
 add_action('wp_enqueue_scripts', 'sj2DTagEnqueue');
+*/
 
 // Generate Styles
 // http://ottopress.com/2010/dont-include-wp-load-please/
+/*
 add_filter('query_vars','sj_trigger_setting');
 function sj_trigger_setting($vars) {
 	$vars[] = 'sj_tag_styles';
@@ -93,51 +96,54 @@ function sj_trigger_setting($vars) {
 }
 
 add_action('template_redirect', 'sj_trigger_check');
-function sj_trigger_check() {
-	if(intval(get_query_var('sj_tag_styles')) == 1) {
-		header("Content-Type: text/css");
-		$tag_config = get_option('sj_tag_conifg');
+*/
+function sjPrintCSS($set) {
+	if ($set) {
+		$set_name = 'sj_tag_conifg_' . $set;
+	} else {
+		$set = 0;
+		$set_name = 'sj_tag_conifg';
+	}
 
-		# initialize;;
-		$config = sjParseOptions($tag_config);
-		$tag_config = $config['tag_config'];
-		extract($config, EXTR_SKIP);
+	$tag_config = get_option($set_name);
 
-		foreach($tag_config['color'] as &$color) {
-			if(!$color['bgcolor']) $color['bgcolor'] = 'transparent';
-			$padding2 = $color['padding'] + 2;
-			if ($color['padding']) $color['padding'] = $color['padding'] . 'px ' . $padding2 . 'px';
-		}
+	# initialize;;
+	$config = sjParseOptions($tag_config);
+	$tag_config = $config['tag_config'];
+	extract($config, EXTR_SKIP);
 
-		$style = 'margin-right:' . $margin_right . 'px !important; margin-bottom:' . $margin_bottom . 'px !important; display:inline-block !important; line-height:' . $line_height . $line_height_unit . ' !important; text-decoration:none !important;';
+	foreach($tag_config['color'] as &$color) {
+		if(!$color['bgcolor']) $color['bgcolor'] = 'transparent';
+		$padding2 = $color['padding'] + 2;
+		if ($color['padding']) $color['padding'] = $color['padding'] . 'px ' . $padding2 . 'px';
+	}
 
-			?>
-body .tag_cloud a {<?php echo $style ?>}
-<?php
-		
-		for($i=1; $i<=$tag_step; $i++) {
-			if (!empty($tag_config['color'][$i]['color']))
-				$style_color = 'color:' . $tag_config['color'][$i]['color'] . ' !important;';
+	$style = 'margin-right:' . $margin_right . 'px !important; margin-bottom:' . $margin_bottom . 'px !important; display:inline-block !important; line-height:' . $line_height . $line_height_unit . ' !important; text-decoration:none !important;';
 
-			if (!empty($tag_config['color'][$i]['bgcolor']))
-				$style_color.= 'background-color:' . $tag_config['color'][$i]['bgcolor'] . ' !important;';
+	$output = 'body .sj_tagcloud_set_' . $set . ' a {' . $style . '}';
 
-			if (!empty($tag_config['color'][$i]['radius']))
-				$style_color.= 'border-radius:' . $tag_config['color'][$i]['radius'] . 'px !important;';
+	for($i=1; $i<=$tag_step; $i++) {
+		if (!empty($tag_config['color'][$i]['color']))
+			$style_color = 'color:' . $tag_config['color'][$i]['color'] . ' !important;';
 
-			if (!empty($tag_config['color'][$i]['padding']))
-				$style_color.= 'padding:' . $tag_config['color'][$i]['padding'] . ' !important;';
+		if (!empty($tag_config['color'][$i]['bgcolor']))
+			$style_color.= 'background-color:' . $tag_config['color'][$i]['bgcolor'] . ' !important;';
 
-			if (!empty($tag_config['size'][$i]))
-				$style_size = 'font-size:' . $tag_config['size'][$i] . 'px !important;';
+		if (!empty($tag_config['color'][$i]['radius']))
+			$style_color.= 'border-radius:' . $tag_config['color'][$i]['radius'] . 'px !important;';
 
-			?>
-body .tag_cloud a.size_<?php echo $i?> {<?php echo $style_size ?>}
-body .tag_cloud a.color_<?php echo $i?> {<?php echo $style_color ?>}
-<?php
-		}
-	exit;
-    }
+		if (!empty($tag_config['color'][$i]['padding']))
+			$style_color.= 'padding:' . $tag_config['color'][$i]['padding'] . ' !important;';
+
+		if (!empty($tag_config['size'][$i]))
+			$style_size = 'font-size:' . $tag_config['size'][$i] . 'px !important;';
+
+
+		$output.= 'body .sj_tagcloud_set_' . $set . ' a.size_' . $i . ' {' . $style_size . '}';
+		$output.= 'body .sj_tagcloud_set_' . $set . ' a.color_' . $i . ' {' . $style_color . '}';
+	}
+	
+	return $output;
 }
 
 function sjParseOptions($options) {
@@ -188,11 +194,18 @@ function sjParseOptions($options) {
 }
 
 # get tags
-function sjGetTags($number, $separator, $sort) {
+function sjGetTags($number, $separator, $sort, $set) {
 	global $wpdb;
-	$tag_config = get_option('sj_tag_conifg');
+	
+	if ($set) {
+		$set_name = 'sj_tag_conifg_' . $set;
+	} else {
+		$set_name = 'sj_tag_conifg';
+	}
 
-	# initialize;;
+	$tag_config = get_option($set_name);
+
+	# initialize;
 	$config = sjParseOptions($tag_config);
 	$tag_config = $config['tag_config'];
 	extract($config, EXTR_SKIP);
@@ -347,9 +360,50 @@ function sjGetTags($number, $separator, $sort) {
 			$tag_size = $hit[$tag->term_id] ? $hit[$tag->term_id] : 1;
 		}
 
-		$tags_out[] = '<a id="sj_tag_' . $i . '" class="size_' . $tag_size . ' color_' . $tag_color . '">' . $tag->tag_name . '</a>';
+		$tags_out[] = '<a id="sj_tag_' . $i . '" class="size_' . $tag_size . ' color_' . $tag_color . '" href="' . $link . '">' . $tag->tag_name . '</a>';
 		$i++;
 	}
 	
 	return implode($separator, $tags_out);
+}
+
+function sjTagSaveSetAdmin($set_id) {
+	$tag_step = $_POST['tag_step'];
+	$tag_method = $_POST['tag_method'];
+	$setting_method = $_POST['setting_method'];
+
+	$line_height = $_POST['line_height'];
+	$line_height_unit = $_POST['line_height_unit'];
+	$margin_right = $_POST['margin_right'];
+	$margin_bottom = $_POST['margin_bottom'];
+
+	$tag_config = array();
+
+	for($i = 1; $i < $_POST['tag_step']+1; $i++) {
+		$tag_config['color'][$i] = array(
+			'color' => $_POST['tag_color_step_' . $i],
+			'bgcolor' => $_POST['tag_bgcolor_step_' . $i],
+			'radius' => $_POST['tag_radius_step_' . $i],
+			'padding' => $_POST['tag_padding_step_' . $i]
+		);
+
+		$tag_config['size'][$i] =$_POST['tag_size_step_' . $i];
+	}
+	
+	$tag_config = array(
+		'tag_step' => $tag_step,
+		'tag_method' => $tag_method,
+		'tag_config' => $tag_config,
+		'setting_method' => $setting_method,
+		'line_height' => $line_height,
+		'line_height_unit' => $line_height_unit,
+		'margin_right' => $margin_right,
+		'margin_bottom' => $margin_bottom,
+	);
+	
+	if (!$set_id) {
+		update_option('sj_tag_conifg', $tag_config);
+	} else {
+		update_option('sj_tag_conifg_' . $set_id, $tag_config);
+	}
 }
