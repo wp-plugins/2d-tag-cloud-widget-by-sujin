@@ -56,6 +56,8 @@ class SJ_Widget_TagCloud extends WP_Widget {
 	} // function update($new_instance, $old_instance)
 
 	function form($instance) {
+		global $sj2DTag;
+
 		$number = isset($instance['number']) ? $instance['number'] : 20;
 		$title = isset($instance['title']) ? $instance['title'] : '';
 		$separator = isset($instance['separator']) ? $instance['separator'] : '';
@@ -68,12 +70,12 @@ class SJ_Widget_TagCloud extends WP_Widget {
 		?>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('title'); ?>">Title :</label>
+				<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', $sj2DTag->text_domain); ?> :</label>
 				<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" class="widefat" />
 			</p>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('set_id'); ?>">Set :</label>
+				<label for="<?php echo $this->get_field_id('set_id'); ?>"><?php _e('Set', $sj2DTag->text_domain); ?> :</label>
 				<select id="<?php echo $this->get_field_id('set_id'); ?>" name="<?php echo $this->get_field_name('set_id'); ?>">
 
 					<?php foreach($tag_set as $key=>$value) { ?>
@@ -86,22 +88,22 @@ class SJ_Widget_TagCloud extends WP_Widget {
 			</p>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('number'); ?>">Number of tags to show :</label>
+				<label for="<?php echo $this->get_field_id('number'); ?>"><?php _e('Number of tags to show', $sj2DTag->text_domain); ?> :</label>
 				<input id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo $number; ?>" class="widefat" />
 			</p>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('separator'); ?>">Separator :</label>
+				<label for="<?php echo $this->get_field_id('separator'); ?>"><?php _e('Separator', $sj2DTag->text_domain); ?> :</label>
 				<input id="<?php echo $this->get_field_id('separator'); ?>" name="<?php echo $this->get_field_name('separator'); ?>" type="text" value="<?php echo $separator; ?>" class="widefat" />
 			</p>
 
 			<p>
-				<label>Sort :</label>
+				<label><?php _e('Sort', $sj2DTag->text_domain); ?> :</label>
 
 				<select name="<?php echo $this->get_field_name('sort'); ?>" class="widefat">
-					<option value="DESC" <?php if ($sort == 'DESC') echo 'selected="selected"' ?>>Put tags by descending order</option>
-					<option value="intersection" <?php if ($sort == 'intersection') echo 'selected="selected"' ?>>Put tags 1 by 1. bigger, smaller, bigger, smaller...</option>
-					<option value="name" <?php if ($sort == 'name') echo 'selected="selected"' ?>>Sort by name</option>
+					<option value="DESC" <?php if ($sort == 'DESC') echo 'selected="selected"' ?>><?php _e('Put tags by descending order', $sj2DTag->text_domain); ?></option>
+					<option value="intersection" <?php if ($sort == 'intersection') echo 'selected="selected"' ?>><?php _e('Put tags 1 by 1. bigger, smaller, bigger, smaller...', $sj2DTag->text_domain); ?></option>
+					<option value="name" <?php if ($sort == 'name') echo 'selected="selected"' ?>><?php _e('Sort by name', $sj2DTag->text_domain); ?></option>
 				</select>
 			</p>
 
