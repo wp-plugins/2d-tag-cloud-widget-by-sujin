@@ -2,6 +2,7 @@
 class sj2DTag {
 	private $sj_tag_db_version = 1.0;
 	private $table_name;
+	private $debug = true;
 
 	private $tag_set;
 	private $set_number = 0;
@@ -58,20 +59,17 @@ class sj2DTag {
 	
 	# When visitors click the post or tag
 	# 내가 만든 DB에 데이터를 쑤셔 넣으라우!
-	public function increase_tag_view_count() {
-		if (is_single()) {
-			global $post;
-			
-			if ($post)
-				$this->increase_tag_view_count_of_single_post($post->ID);
+	public function increase_tag_view_count($query) {
+		if (is_single() && $query->is_single) {
+			$this->increase_tag_view_count_of_single_post($query->query_vars['p']);
 		}
 
-		if (is_tag() && $query->is_main_query()) {
-			$term = get_queried_object();
-			if (!$term)
-				return false;
+		if (is_tag() && $query->query_vars['tag']) {
+			$term = get_term_by('slug', $query->query_vars['tag'], 'post_tag');
 
-			$this->increase_tag_view_count_of_tag($term->term_id);
+			if ($term) {
+				$this->increase_tag_view_count_of_tag($term->term_id);
+			}
 		}
 	}
 
@@ -94,7 +92,6 @@ class sj2DTag {
 
 	private function increase_tag_view_count_of_tag($tag_id) {
 		global $wpdb;
-
 		if ($hit = $wpdb->get_var("SELECT hit FROM $this->table_name WHERE term_id = $tag_id")) {
 			$hit++;
 			$wpdb->update($this->table_name, array('hit' => $hit), array('term_id' => $tag_id));
@@ -385,7 +382,7 @@ class sj2DTag {
 	public function trigget_admin_menu() {
 		add_options_page(__('2D Tag Cloud', $this->text_domain), __('2D Tag Cloud', $this->text_domain), 'manage_options', '2D-tag-cloud-options', array(&$this, 'admin_menu'));
 	}
-	
+
 	public function admin_menu() {
 		if (isset($_POST['action']) && check_admin_referer($this->text_domain)) {
 			switch($_POST['action']) {
@@ -414,7 +411,7 @@ class sj2DTag {
 
 		$this->print_admin_page();
 	}
-	
+
 	public function save_option() {
 		$tag_config = array();
 
@@ -695,7 +692,8 @@ class sj2DTag {
 	}
 
 	private function debug($array) {
-		echo '<pre style="display:none;">';
+		$style = ($this->debug == false) ? 'style="display:none;"' : '';
+		echo '<pre ' . $style . '>';
 		print_r($array);
 		echo '</pre>';
 	}
