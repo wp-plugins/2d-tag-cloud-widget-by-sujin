@@ -295,6 +295,8 @@ class sj2DTag {
 
 		$style = 'margin-right:' . $margin_right . 'px !important; margin-bottom:' . $margin_bottom . 'px !important; display:inline-block !important; line-height:' . $line_height . $line_height_unit . ' !important; text-decoration:none !important;';
 
+		$underline = ($underline) ? 'text-decoration:underline !important;' : '';
+
 		$output = 'body .sj_tagcloud_set_' . $this->set_number . ' a {' . $style . '}';
 
 		for($i=1; $i<=$tag_step; $i++) {
@@ -313,9 +315,15 @@ class sj2DTag {
 			if (!empty($tag_config['size'][$i]))
 				$style_size = 'font-size:' . $tag_config['size'][$i] . 'px !important;';
 	
+			if (!empty($tag_config['color'][$i]['color_over']))
+				$style_color_over = 'color:' . $tag_config['color'][$i]['color_over'] . ' !important;';
 	
+			if (!empty($tag_config['color'][$i]['bgcolor_over']))
+				$style_color_over.= 'background-color:' . $tag_config['color'][$i]['bgcolor_over'] . ' !important;';
+
 			$output.= 'body .sj_tagcloud_set_' . $this->set_number . ' a.size_' . $i . ' {' . $style_size . '}';
-			$output.= 'body .sj_tagcloud_set_' . $this->set_number . ' a.color_' . $i . ' {' . $style_color . '}';
+			$output.= 'body .sj_tagcloud_set_' . $this->set_number . ' a.color_' . $i . ' {' . $style_color . ' transition:color 0.25s ease-in 0s, background-color 0.25s ease-in 0s;}';
+			$output.= 'body .sj_tagcloud_set_' . $this->set_number . ' a.color_' . $i . ':hover {' . $style_color_over . ' ' . $underline . '}';
 		}
 
 		return $output;
@@ -340,12 +348,15 @@ class sj2DTag {
 			$line_height_unit = 'em';
 			$margin_right = 5;
 			$margin_bottom = 10;
+			$underline = 0;
 	
 			$tag_config = array(
 				'color' => array(
 					1 => array(
 						'color' => '#000000',
 						'bgcolor' => '',
+						'color_over' => '',
+						'bgcolor_over' => '',
 						'radius' => 0,
 						'padding' => 0
 					)
@@ -364,6 +375,7 @@ class sj2DTag {
 			$line_height_unit = $options['line_height_unit'];
 			$margin_right = $options['margin_right'];
 			$margin_bottom = $options['margin_bottom'];
+			$underline = $options['underline'];
 	
 			$tag_config = $options['tag_config'];
 		}
@@ -375,6 +387,7 @@ class sj2DTag {
 			'line_height_unit' => $line_height_unit,
 			'margin_right' => $margin_right,
 			'margin_bottom' => $margin_bottom,
+			'underline' => $underline,
 			'tag_config' => $tag_config
 		);
 	}
@@ -419,6 +432,8 @@ class sj2DTag {
 			$tag_config['color'][$i] = array(
 				'color' => $_POST['tag_color_step_' . $i],
 				'bgcolor' => $_POST['tag_bgcolor_step_' . $i],
+				'color_over' => $_POST['tag_color_over_step_' . $i],
+				'bgcolor_over' => $_POST['tag_bgcolor_over_step_' . $i],
 				'radius' => $_POST['tag_radius_step_' . $i],
 				'padding' => $_POST['tag_padding_step_' . $i]
 			);
@@ -426,6 +441,8 @@ class sj2DTag {
 			$tag_config['size'][$i] =$_POST['tag_size_step_' . $i];
 		}
 		
+		$underline = (isset($_POST['underline'])) ? 'true' : '';
+
 		$tag_config = array(
 			'tag_step' => $_POST['tag_step'],
 			'tag_method' => $_POST['tag_method'],
@@ -434,6 +451,7 @@ class sj2DTag {
 			'line_height_unit' => $_POST['line_height_unit'],
 			'margin_right' => $_POST['margin_right'],
 			'margin_bottom' => $_POST['margin_bottom'],
+			'underline' => $underline,
 			'tag_config' => $tag_config
 		);
 
@@ -598,7 +616,12 @@ class sj2DTag {
 					<input id="margin_bottom" class="jquery-spinner" name="margin_bottom" value="<?php echo $margin_bottom ?>" />
 					<p class="desc label"></p>
 				</div>
-		
+
+				<div class="col_wrapper">
+					<label for=""><?php _e('Underline', $this->text_domain); ?></label>
+					<input type="checkbox" id="underline" name="underline" <?php if ($underline) echo 'checked="checked"' ?> /> <label for="underline" id="label_underline"><?php _e('Check if show underline when mouse-over', $this->text_domain); ?></label>
+				</div>
+
 				<div id="prev_wrapper">
 					<table id="sjTagTable" class="wp-list-table widefat fixed posts">
 						<thead>
@@ -642,6 +665,19 @@ class sj2DTag {
 								<th><?php _e('Size', $this->text_domain); ?></th>
 								<?php foreach($tag_config['size'] as $key => $value) { ?>
 								<td><input type="text" id="tag_size_step_<?php echo $key ?>" name="tag_size_step_<?php echo $key ?>" class="tag_size jquery-spinner" value="<?php echo $value ?>" /></td>
+								<?php } ?>
+							</tr>
+
+								<th><?php _e('Text Color', $this->text_domain); ?> <?php _e('(Over)', $this->text_domain); ?></th>
+								<?php foreach($tag_config['color'] as $key => $value) { ?>
+								<td><input type="text" id="tag_color_over_step_<?php echo $key ?>" name="tag_color_over_step_<?php echo $key ?>" class="tag_color_over color-picker" value="<?php echo $value['color_over'] ?>" /></td>
+								<?php } ?>
+							</tr>
+		
+							<tr>
+								<th><?php _e('Background Color', $this->text_domain); ?> <?php _e('(Over)', $this->text_domain); ?></th>
+								<?php foreach($tag_config['color'] as $key => $value) { ?>
+								<td><input type="text" id="tag_bgcolor_over_step_<?php echo $key ?>" name="tag_bgcolor_over_step_<?php echo $key ?>" class="tag_bgcolor_over color-picker" value="<?php echo $value['bgcolor_over'] ?>" /></td>
 								<?php } ?>
 							</tr>
 						</tbody>

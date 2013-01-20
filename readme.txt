@@ -4,7 +4,7 @@ Donate link: http://www.sujinc.com/lab/2d-tag-cloud-widget/
 Tags: tag, cloud
 Requires at least: 2.8
 Tested up to: 3.5
-Stable tag: 3.0.1
+Stable tag: 4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,11 @@ shortcode is [tag2d] you can controll with 3 attributes.
 3. Result / 결과
 
 == Changelog ==
+
+= 4.0 =
+* You can set mouse-over color. (마우스 오버 시 컬러 변화를 설정할 수 있어요)
+* If you set mouse-over color, I want you to set padding and border-radius. (마우스 오버 컬러를 설정하시면 패딩하고 보더 래디어스를 설정하시길 바래요)
+* You can set text-underline attribute when mouse-over. (마우스 오버 시 언더라인 표시 여부도 설정하실 수 있어요.)
 
 = 3.0.1 =
 * Fix bugs that caused with older version of WP. (옛날 버전의 WP에서 나오는 오류를 수정했어요.)

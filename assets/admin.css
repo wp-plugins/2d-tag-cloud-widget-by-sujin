@@ -19,3 +19,6 @@
 #sjTagPreview {clear:both; display:block; width:500px; border:1px solid #999999; padding:5px;}
 
 .sjTag .desc {margin:1em 0 1em 125px;}
+
+.sjTag #underline {float:left; margin-right:10px;}
+.sjTag #label_underline {width:auto;}

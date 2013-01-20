@@ -200,26 +200,35 @@ function do_preset_4_white() {
 	jQuery('#line_height_unit').val('em');
 	jQuery('#margin_right').val(5);
 	jQuery('#margin_bottom').val(10);
+	jQuery('#underline').attr('checked', false);
 
 	jQuery('#tag_color_step_1').val('#cecece');
 	jQuery('#tag_bgcolor_step_1').val('');
-	jQuery('#tag_radius_step_1').val('');
-	jQuery('#tag_padding_step_1').val(0);
+	jQuery('#tag_radius_step_1').val(5);
+	jQuery('#tag_padding_step_1').val(3);
+	jQuery('#tag_color_over_step_1').val('#000000');
+	jQuery('#tag_bgcolor_over_step_1').val('#d5ff00');
 
 	jQuery('#tag_color_step_2').val('#856797');
 	jQuery('#tag_bgcolor_step_2').val('');
-	jQuery('#tag_radius_step_2').val('');
-	jQuery('#tag_padding_step_2').val(0);
+	jQuery('#tag_radius_step_2').val(5);
+	jQuery('#tag_padding_step_2').val(3);
+	jQuery('#tag_color_over_step_2').val('#000000');
+	jQuery('#tag_bgcolor_over_step_2').val('#d5ff00');
 
 	jQuery('#tag_color_step_3').val('#FFFFFF');
 	jQuery('#tag_bgcolor_step_3').val('#c9bbd2');
 	jQuery('#tag_radius_step_3').val(5);
 	jQuery('#tag_padding_step_3').val(3);
+	jQuery('#tag_color_over_step_3').val('#000000');
+	jQuery('#tag_bgcolor_over_step_3').val('#d5ff00');
 
 	jQuery('#tag_color_step_4').val('#FFFFFF');
 	jQuery('#tag_bgcolor_step_4').val('#7629A3');
 	jQuery('#tag_radius_step_4').val(5);
 	jQuery('#tag_padding_step_4').val(3);
+	jQuery('#tag_color_over_step_4').val('#000000');
+	jQuery('#tag_bgcolor_over_step_4').val('#d5ff00');
 
 	jQuery('#tag_size_step_1').val(12);
 	jQuery('#tag_size_step_2').val(16);
@@ -238,26 +247,35 @@ function do_preset_4_black() {
 	jQuery('#line_height_unit').val('em');
 	jQuery('#margin_right').val(5);
 	jQuery('#margin_bottom').val(10);
+	jQuery('#underline').attr('checked', false);
 
 	jQuery('#tag_color_step_1').val('#CECECE');
 	jQuery('#tag_bgcolor_step_1').val('');
-	jQuery('#tag_radius_step_1').val('');
-	jQuery('#tag_padding_step_1').val(0);
+	jQuery('#tag_radius_step_1').val(5);
+	jQuery('#tag_padding_step_1').val(3);
+	jQuery('#tag_color_over_step_1').val('#FFFFFF');
+	jQuery('#tag_bgcolor_over_step_1').val('#fcc111');
 
 	jQuery('#tag_color_step_2').val('#FFFFFF');
 	jQuery('#tag_bgcolor_step_2').val('');
-	jQuery('#tag_radius_step_2').val('');
-	jQuery('#tag_padding_step_2').val(0);
+	jQuery('#tag_radius_step_2').val(5);
+	jQuery('#tag_padding_step_2').val(3);
+	jQuery('#tag_color_over_step_2').val('#FFFFFF');
+	jQuery('#tag_bgcolor_over_step_2').val('#fcc111');
 
 	jQuery('#tag_color_step_3').val('#FFFFFF');
 	jQuery('#tag_bgcolor_step_3').val('#fde394');
 	jQuery('#tag_radius_step_3').val(5);
 	jQuery('#tag_padding_step_3').val(3);
+	jQuery('#tag_color_over_step_3').val('#FFFFFF');
+	jQuery('#tag_bgcolor_over_step_3').val('#bc8d00');
 
 	jQuery('#tag_color_step_4').val('#FFFFFF');
 	jQuery('#tag_bgcolor_step_4').val('#fcc111');
 	jQuery('#tag_radius_step_4').val(5);
 	jQuery('#tag_padding_step_4').val(3);
+	jQuery('#tag_color_over_step_4').val('#FFFFFF');
+	jQuery('#tag_bgcolor_over_step_4').val('#705400');
 
 	jQuery('#tag_size_step_1').val(12);
 	jQuery('#tag_size_step_2').val(16);
