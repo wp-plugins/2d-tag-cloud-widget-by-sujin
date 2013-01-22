@@ -1,28 +1,42 @@
 <?php
-class sj2DTag {
+class sj2DTag extends Framework_Sujin_Plugin {
 	private $sj_tag_db_version = 1.0;
 	private $table_name;
-	private $debug = true;
 
+	/* Set */
 	private $tag_set;
 	private $set_number = 0;
-	private $set_name = 'Default Set';
-	private $set_guid = 'sj_tag_conifg';
+	private $set_name = "Default Set";
+	private $set_guid = "sj_tag_conifg";
 
+	/* Config */
 	private $number_of_tags;
 	private $tag_separator;
 	private $sort_by;
 
-	static $instance = false;
-	public $text_domain = 'sujin-2d-tag-cloud';
+	private static $instance = false;
 
 	protected function __construct() {
 		global $wpdb;
 		$this->table_name = $wpdb->prefix . "terms_hit";
 
 		$this->tag_set = get_option('sj_tag_set');
+		$this->debug = get_option('sj_tag_debug');
+
+		if ($this->debug) {
+			@ini_set('display_errors', 1);
+			@ini_set('error_reporting', 1);
+		}
+
 		if (!$this->tag_set) $this->tag_set = array(0 => 'Default Set');
 
+		$this->trigger_hooks();
+
+		$this->text_domain = "sujin-2d-tag-cloud";
+		parent::__construct();
+	}
+
+	public function trigger_hooks() {
 		# hooks
 		register_activation_hook(__FILE__, array(&$this, 'activate_plgin'));
 		add_action('parse_query', array(&$this, 'increase_tag_view_count'));
@@ -31,32 +45,41 @@ class sj2DTag {
 		add_action('plugins_loaded', array(&$this, 'load_plugin_textdomain'));
 	}
 
-	public static function getInstance() {
-		if (!self::$instance)
-			self::$instance = new self;
-
-		return self::$instance;
-	}
-
 	# Activation Hook & Make Database
 	# 구동 시 훅을 걸어 DB를 생성합니다.
 	public function activate_plgin() {
 		global $wpdb;
 
 		if($wpdb->get_var("show tables like '$this->table_name'") != $this->table_name) {
-			$sql = "CREATE TABLE $this->table_name (
-					term_id bigint(20) NOT NULL,
-					hit bigint(20) DEFAULT 0 NOT NULL,
-					UNIQUE KEY id(term_id)
-					);";
-	
-			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-			dbDelta($sql);
-	
-			add_option("sj_tag_db_version", $jal_db_version);
+			$this->make_table();
 		}
 	}
-	
+
+	private function make_table() {
+		$sql = "CREATE TABLE $this->table_name (
+				term_id bigint(20) NOT NULL,
+				hit bigint(20) DEFAULT 0 NOT NULL,
+				UNIQUE KEY id(term_id)
+				);";
+
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+		$error = dbDelta($sql);
+
+		$this->d($sql);
+		$this->d($error);
+
+		add_option("sj_tag_db_version", $this->sj_tag_db_version);
+	}
+
+	private function check_table_exist() {
+		global $wpdb;
+
+		if($wpdb->get_var("show tables like '$this->table_name'") != $this->table_name) {
+			$this->d("Table is not exist. This Program will make table...");
+			$this->make_table();
+		}
+	}
+
 	# When visitors click the post or tag
 	# 내가 만든 DB에 데이터를 쑤셔 넣으라우!
 	public function increase_tag_view_count($query) {
@@ -91,7 +114,12 @@ class sj2DTag {
 	}
 
 	private function increase_tag_view_count_of_tag($tag_id) {
+		if ($this->debug) {
+			$this->check_table_exist();
+		}
+
 		global $wpdb;
+
 		if ($hit = $wpdb->get_var("SELECT hit FROM $this->table_name WHERE term_id = $tag_id")) {
 			$hit++;
 			$wpdb->update($this->table_name, array('hit' => $hit), array('term_id' => $tag_id));
@@ -107,6 +135,10 @@ class sj2DTag {
 
 	# 태그클라우드를 뽑아요!
 	public function get_tag_cloud() {
+		if ($this->debug) {
+			$this->check_table_exist();
+		}
+
 		global $wpdb;
 
 		$tag_config = get_option($this->set_guid);
@@ -139,7 +171,8 @@ class sj2DTag {
 		';
 	
 		$tags_count = $wpdb->get_results($query_count); // 포함수
-	
+		$this->d($tags_count);
+
 		$query_hit = '
 			SELECT
 				terms.term_id as term_id,
@@ -162,7 +195,8 @@ class sj2DTag {
 		';
 	
 		$tags_hit = $wpdb->get_results($query_hit); // 히트수
-	
+		$this->d($tags_hit);
+
 		$tags = array();
 
 		// 히트와 뷰를 한 개씩 섞는다
@@ -197,7 +231,6 @@ class sj2DTag {
 			$hit[$tag->term_id] = $tag->post_hit;
 			$count[$tag->term_id] = $tag->post_count;
 		}
-	
 
 		# 값으로 정렬
 		asort($count);
@@ -376,10 +409,12 @@ class sj2DTag {
 			$margin_right = $options['margin_right'];
 			$margin_bottom = $options['margin_bottom'];
 			$underline = $options['underline'];
-	
+
 			$tag_config = $options['tag_config'];
 		}
-		
+
+		$this->debug = get_option('sj_tag_debug');
+
 		return array(
 			'tag_step' => $tag_step,
 			'tag_method' => $tag_method,
@@ -456,6 +491,9 @@ class sj2DTag {
 		);
 
 		update_option($this->set_guid, $tag_config);
+
+		$debug = (isset($_POST['debug'])) ? 'true' : '';
+		update_option('sj_tag_debug', $debug);
 	}
 
 	private function make_new_option() {
@@ -510,11 +548,6 @@ class sj2DTag {
 		$this->number_of_tags = $number;
 		$this->tag_separator = $separator;
 		$this->sort_by = $sort;
-	}
-
-	private function redirect($url) {
-		echo '<script>window.location="' . $url . '"</script>';
-		die;
 	}
 
 	private function print_admin_page() {
@@ -622,6 +655,11 @@ class sj2DTag {
 					<input type="checkbox" id="underline" name="underline" <?php if ($underline) echo 'checked="checked"' ?> /> <label for="underline" id="label_underline"><?php _e('Check if show underline when mouse-over', $this->text_domain); ?></label>
 				</div>
 
+				<div class="col_wrapper">
+					<label for=""><?php _e('Turn on Debug Mode', $this->text_domain); ?></label>
+					<input type="checkbox" id="debug" name="debug" <?php if ($this->debug) echo 'checked="checked"' ?> /> <label for="debug" id="label_debug"><?php _e('Check if you have a problem, and I wish you send me a message of your footer to sujin.2f@gmail.com', $this->text_domain); ?></label>
+				</div>
+
 				<div id="prev_wrapper">
 					<table id="sjTagTable" class="wp-list-table widefat fixed posts">
 						<thead>
@@ -727,11 +765,11 @@ class sj2DTag {
 		<?php
 	}
 
-	private function debug($array) {
-		$style = ($this->debug == false) ? 'style="display:none;"' : '';
-		echo '<pre ' . $style . '>';
-		print_r($array);
-		echo '</pre>';
+	public static function getInstance() {
+		if (!self::$instance)
+			self::$instance = new self;
+
+		return self::$instance;
 	}
 }
 

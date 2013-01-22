@@ -22,3 +22,6 @@
 
 .sjTag #underline {float:left; margin-right:10px;}
 .sjTag #label_underline {width:auto;}
+
+.sjTag #debug {float:left; margin-right:10px;}
+.sjTag #label_debug {width:auto;}

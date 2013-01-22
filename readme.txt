@@ -4,7 +4,7 @@ Donate link: http://www.sujinc.com/lab/2d-tag-cloud-widget/
 Tags: tag, cloud
 Requires at least: 2.8
 Tested up to: 3.5
-Stable tag: 4.0
+Stable tag: 4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,10 @@ shortcode is [tag2d] you can controll with 3 attributes.
 3. Result / 결과
 
 == Changelog ==
+
+= 4.1 =
+* Add Debug Mode. (디버깅 모드를 추가했어요.)
+* If you get an error while activate and run this plugin, you activate this Debug mode and send me a screenshot to sujin.2f@gmail.com (플러그인 실행 중 이상이 있다면 스크린샷을 제게 보내주세요)
 
 = 4.0 =
 * You can set mouse-over color. (마우스 오버 시 컬러 변화를 설정할 수 있어요)
