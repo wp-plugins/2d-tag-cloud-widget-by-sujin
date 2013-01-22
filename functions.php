@@ -26,6 +26,9 @@ class sj2DTag extends Framework_Sujin_Plugin {
 		if ($this->debug) {
 			@ini_set('display_errors', 1);
 			@ini_set('error_reporting', 1);
+		} else {
+			@ini_set('display_errors', 0);
+			@ini_set('error_reporting', 0);
 		}
 
 		if (!$this->tag_set) $this->tag_set = array(0 => 'Default Set');
