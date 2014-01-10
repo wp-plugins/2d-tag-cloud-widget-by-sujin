@@ -3,8 +3,8 @@ Contributors: sujin2f
 Donate link: http://www.sujinc.com/lab/2d-tag-cloud-widget/
 Tags: tag, cloud
 Requires at least: 2.8
-Tested up to: 3.5
-Stable tag: 4.1
+Tested up to: 3.8
+Stable tag: 4.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,9 @@ shortcode is [tag2d] you can controll with 3 attributes.
 3. Result / 결과
 
 == Changelog ==
+
+= 4.1.1 =
+* Fix activation hook
 
 = 4.1 =
 * Add Debug Mode. (디버깅 모드를 추가했어요.)
