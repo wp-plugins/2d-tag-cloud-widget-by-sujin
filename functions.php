@@ -41,7 +41,7 @@ class sj2DTag extends Framework_Sujin_Plugin {
 
 	public function trigger_hooks() {
 		# hooks
-		register_activation_hook(__FILE__, array(&$this, 'activate_plgin'));
+		register_activation_hook( __DIR__.'/two-dimensional-tag-cloud-sujin.php', array(&$this, 'activate_plgin'));
 		add_action('parse_query', array(&$this, 'increase_tag_view_count'));
 		add_action('admin_enqueue_scripts', array(&$this, 'admin_enqueue_scripts'));
 		add_action('admin_menu', array(&$this, 'trigget_admin_menu'));
@@ -158,21 +158,21 @@ class sj2DTag extends Framework_Sujin_Plugin {
 				terms.name as tag_name,
 				taxonomy.count as post_count,
 				count.hit as post_hit
-	
+
 			FROM
 				' . $wpdb->term_taxonomy . ' as taxonomy
 					LEFT JOIN ' . $wpdb->terms . ' as terms ON taxonomy.term_id = terms.term_id
 					LEFT JOIN ' . $wpdb->term_relationships . ' as relationship ON terms.term_id = relationship.term_taxonomy_id
 					LEFT JOIN ' . $wpdb->posts . ' as post ON post.ID = relationship.object_ID
 					LEFT JOIN ' . $this->table_name . ' as count ON count.term_id = terms.term_id
-	
+
 			WHERE
 				taxonomy.taxonomy = "post_tag" AND count <> 0
-	
+
 			GROUP BY terms.term_id
 			ORDER BY post_count DESC LIMIT ' . $this->number_of_tags . '
 		';
-	
+
 		$tags_count = $wpdb->get_results($query_count); // 포함수
 		$this->d($tags_count);
 
@@ -182,21 +182,21 @@ class sj2DTag extends Framework_Sujin_Plugin {
 				terms.name as tag_name,
 				taxonomy.count as post_count,
 				count.hit as post_hit
-	
+
 			FROM
 				' . $wpdb->term_taxonomy . ' as taxonomy
 					LEFT JOIN ' . $wpdb->terms . ' as terms ON taxonomy.term_id = terms.term_id
 					LEFT JOIN ' . $wpdb->term_relationships . ' as relationship ON terms.term_id = relationship.term_taxonomy_id
 					LEFT JOIN ' . $wpdb->posts . ' as post ON post.ID = relationship.object_ID
 					LEFT JOIN ' . $this->table_name . ' as count ON count.term_id = terms.term_id
-	
+
 			WHERE
 				taxonomy.taxonomy = "post_tag" AND count <> 0
-	
+
 			GROUP BY terms.term_id
 			ORDER BY post_hit DESC LIMIT ' . $this->number_of_tags . '
 		';
-	
+
 		$tags_hit = $wpdb->get_results($query_hit); // 히트수
 		$this->d($tags_hit);
 
@@ -212,13 +212,13 @@ class sj2DTag extends Framework_Sujin_Plugin {
 					if ($k == $this->number_of_tags) break;
 				}
 			}
-			
+
 			if ($this->sort_by == 'intersection') {
 				$j = $this->number_of_tags - $i;
 			} else {
 				$j = $i;
 			}
-	
+
 			if (isset($tags_hit[$j])) {
 				$tags[$tags_hit[$j]->term_id] = $tags_hit[$j];
 				if (!isset($tags[$tags_hit[$j]->term_id])) {
@@ -227,7 +227,7 @@ class sj2DTag extends Framework_Sujin_Plugin {
 				}
 			}
 		}
-	
+
 		# 한 자리에 몰아넣는 배열을 만든다, 민/맥스도 뽑고 각각의 녀석에게 스타일도 부여하기 위해
 		$hit = $count = $tags_out = array();
 		foreach ($tags as $tag) {
@@ -241,12 +241,12 @@ class sj2DTag extends Framework_Sujin_Plugin {
 
 		# 한 단계에 몇 개의 태그가 들어가는지...
 		$tag_step = count($tags) / $tag_step;
-	
+
 		# 두바퀴만 더 돌려 카운트와 히트를 스텝에 맞는 값으로 변환한다
 		$i = 0;
 		$prev_value = -1;
 		$prev_chanded = -1;
-	
+
 		foreach ($count as $key => &$value) {
 			if ($prev_value == $value) {
 				$value = $prev_chanded;
@@ -254,10 +254,10 @@ class sj2DTag extends Framework_Sujin_Plugin {
 				$prev_value = $value;
 				$value = $prev_chanded = floor($i / $tag_step) + 1; // 0,1,2 대신 1,2,3을 사용했으니 편의상 +1
 			}
-	
+
 			$i++;
 		}
-	
+
 		$i = 0;
 		$prev_value = -1;
 		$prev_chanded = -1;
@@ -269,27 +269,27 @@ class sj2DTag extends Framework_Sujin_Plugin {
 				$prev_value = $value;
 				$value = $prev_chanded = floor($i / $tag_step) + 1; // 0,1,2 대신 1,2,3을 사용했으니 편의상 +1
 			}
-	
+
 			$i++;
 		}
 
 		if ($this->sort_by == 'name') {
 			$new_tag = array();
-	
+
 			foreach ($tags as $tag) {
 				$new_tag[strtolower($tag->tag_name)] = $tag;
 			}
-	
+
 			ksort($new_tag);
 			$tags = $new_tag;
 		}
-	
+
 		# 준비는 끝났다 +_+ 이제 녀석들을 만들어보자
 		$i = 0;
 		$tags_out = array();
 		foreach ($tags as $tag) {
 			$link = get_tag_link($tag->term_id);
-	
+
 			if ($tag_method == 'click-color') {
 				$tag_size = $count[$tag->term_id];
 				$tag_color = $hit[$tag->term_id] ? $hit[$tag->term_id] : 1;
@@ -301,21 +301,21 @@ class sj2DTag extends Framework_Sujin_Plugin {
 			$tags_out[] = '<a id="sj_tag_' . $i . '" class="size_' . $tag_size . ' color_' . $tag_color . '" href="' . $link . '">' . $tag->tag_name . '</a>';
 			$i++;
 		}
-		
+
 		return '<div class="tag_cloud sj_tagcloud_set_' . $this->set_number . '">' . implode($separator, $tags_out) . '</div><style>' . $this->print_css() . '</style>';
 	}
 
 	public function admin_enqueue_scripts() {
 		wp_enqueue_script('jquery');
-		
+
 		wp_enqueue_script('jquery-ui-core');
 		wp_enqueue_script('jquery-ui-widget');
 		wp_enqueue_script('jquery-ui-button');
 		wp_enqueue_script('jquery-ui-spinner');
-		
+
 		wp_enqueue_style('jquery-ui');
-		wp_enqueue_script('iris'); 
-	
+		wp_enqueue_script('iris');
+
 		wp_enqueue_script('sujin_tag', plugin_dir_url( __FILE__ ) . '/assets/admin.js');
 		wp_enqueue_style('sujin_tag', plugin_dir_url( __FILE__ ) . '/assets/admin.css');
 	}
@@ -338,22 +338,22 @@ class sj2DTag extends Framework_Sujin_Plugin {
 		for($i=1; $i<=$tag_step; $i++) {
 			if (!empty($tag_config['color'][$i]['color']))
 				$style_color = 'color:' . $tag_config['color'][$i]['color'] . ' !important;';
-	
+
 			if (!empty($tag_config['color'][$i]['bgcolor']))
 				$style_color.= 'background-color:' . $tag_config['color'][$i]['bgcolor'] . ' !important;';
-	
+
 			if (!empty($tag_config['color'][$i]['radius']))
 				$style_color.= 'border-radius:' . $tag_config['color'][$i]['radius'] . 'px !important;';
-	
+
 			if (!empty($tag_config['color'][$i]['padding']))
 				$style_color.= 'padding:' . $tag_config['color'][$i]['padding'] . ' !important;';
-	
+
 			if (!empty($tag_config['size'][$i]))
 				$style_size = 'font-size:' . $tag_config['size'][$i] . 'px !important;';
-	
+
 			if (!empty($tag_config['color'][$i]['color_over']))
 				$style_color_over = 'color:' . $tag_config['color'][$i]['color_over'] . ' !important;';
-	
+
 			if (!empty($tag_config['color'][$i]['bgcolor_over']))
 				$style_color_over.= 'background-color:' . $tag_config['color'][$i]['bgcolor_over'] . ' !important;';
 
@@ -379,13 +379,13 @@ class sj2DTag extends Framework_Sujin_Plugin {
 		# Default Option
 		if (!$options) {
 			$tag_step = 1;
-	
+
 			$line_height = 1.3;
 			$line_height_unit = 'em';
 			$margin_right = 5;
 			$margin_bottom = 10;
 			$underline = 0;
-	
+
 			$tag_config = array(
 				'color' => array(
 					1 => array(
@@ -401,12 +401,12 @@ class sj2DTag extends Framework_Sujin_Plugin {
 					1 => 12
 				)
 			);
-	
+
 			$tag_method = 'click-color';
 		} else {
 			$tag_step = $options['tag_step'];
 			$tag_method = $options['tag_method'];
-	
+
 			$line_height = $options['line_height'];
 			$line_height_unit = $options['line_height_unit'];
 			$margin_right = $options['margin_right'];
@@ -443,7 +443,7 @@ class sj2DTag extends Framework_Sujin_Plugin {
 					} else {
 						$this->set_by_number($_POST['set_current_id']);
 					}
-		
+
 					$this->save_option();
 					break;
 
@@ -475,10 +475,10 @@ class sj2DTag extends Framework_Sujin_Plugin {
 				'radius' => $_POST['tag_radius_step_' . $i],
 				'padding' => $_POST['tag_padding_step_' . $i]
 			);
-	
+
 			$tag_config['size'][$i] =$_POST['tag_size_step_' . $i];
 		}
-		
+
 		$underline = (isset($_POST['underline'])) ? 'true' : '';
 
 		$tag_config = array(
@@ -512,7 +512,7 @@ class sj2DTag extends Framework_Sujin_Plugin {
 		$this->set_by_number(key($this->tag_set));
 
 		$this->save_option();
-	
+
 		$this->redirect(get_site_url() . '/wp-admin/options-general.php?page=2D-tag-cloud-options&set=' . $this->set_number);
 	}
 
@@ -564,7 +564,7 @@ class sj2DTag extends Framework_Sujin_Plugin {
 
 		<div class="wrap sjTag">
 			<div class="icon32" id="icon-options-general"><br></div><h2><?php _e('2D Tag Cloud Setting', $this->text_domain); ?></h2>
-		
+
 			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" class="donation">
 				<input type="hidden" name="cmd" value="_s-xclick">
 				<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
@@ -582,27 +582,27 @@ class sj2DTag extends Framework_Sujin_Plugin {
 				<input type="hidden" value="<?php _e('You cannot delete the default set.', $this->text_domain); ?>" id="text_of_delete_alert">
 				<input type="hidden" value="<?php _e('Do you really want to delete this set?', $this->text_domain); ?>" id="text_of_delete_confirm">
 				<input type="hidden" value="<?php _e('You must fill a set name.', $this->text_domain); ?>" id="text_of_make_alert">
-		
+
 				<?php wp_nonce_field($this->text_domain) ?>
-		
+
 				<div class="col_wrapper">
 					<label for="tag_set"><?php _e('Set', $this->text_domain); ?></label>
 					<select id="tag_set" name="tag_set">
-		
+
 						<?php foreach($this->tag_set as $key=>$value) { ?>
-		
+
 						<option value="<?php echo $key ?>" <?php if ($key == $this->set_number) echo 'selected="selected"' ?>><?php echo $value ?></option>
-		
+
 						<?php } ?>
-		
+
 					</select>
-					
+
 					<script>
 					jQuery('#tag_set').bind('change', function() {
 						window.location = window.location.pathname + '?page=2D-tag-cloud-options&set=' + jQuery(this).val();
 					});
 					</script>
-		
+
 					<a href="#" onclick="delete_set(<?php echo $this->set_number ?>); return false;" class="button"><?php _e('Delete this set', $this->text_domain); ?></a>
 					<input id="set_name" name="set_name" />
 					<a href="#" onclick="make_set(); return false;" class="button"><?php _e('Make new set', $this->text_domain); ?></a>
@@ -614,7 +614,7 @@ class sj2DTag extends Framework_Sujin_Plugin {
 					<input id="tag_step" class="jquery-spinner" name="tag_step" value="<?php echo $tag_step ?>" />
 					<p class="desc label"></p>
 				</div>
-		
+
 				<div class="col_wrapper">
 					<label for="tag_method"><?php _e('Output', $this->text_domain); ?></label>
 					<select id="tag_method" name="tag_method">
@@ -623,7 +623,7 @@ class sj2DTag extends Framework_Sujin_Plugin {
 					</select>
 					<p class="desc label"></p>
 				</div>
-		
+
 				<div class="col_wrapper">
 					<label><?php _e('Preset', $this->text_domain); ?></label>
 					<a href="#" onclick="do_preset_4_white(); return false;"><?php _e('4 Step / Bright Background', $this->text_domain); ?></a><br />
@@ -640,13 +640,13 @@ class sj2DTag extends Framework_Sujin_Plugin {
 					</select>
 					<p class="desc label"></p>
 				</div>
-		
+
 				<div class="col_wrapper">
 					<label for="margin_right"><?php _e('Right Margin', $this->text_domain); ?></label>
 					<input id="margin_right" class="jquery-spinner" name="margin_right" value="<?php echo $margin_right ?>" />
 					<p class="desc label"></p>
 				</div>
-		
+
 				<div class="col_wrapper">
 					<label for="margin_bottom"><?php _e('Bottom Margin', $this->text_domain); ?></label>
 					<input id="margin_bottom" class="jquery-spinner" name="margin_bottom" value="<?php echo $margin_bottom ?>" />
@@ -680,28 +680,28 @@ class sj2DTag extends Framework_Sujin_Plugin {
 								<td><input type="text" id="tag_color_step_<?php echo $key ?>" name="tag_color_step_<?php echo $key ?>" class="tag_color color-picker" value="<?php echo $value['color'] ?>" /></td>
 								<?php } ?>
 							</tr>
-		
+
 							<tr>
 								<th><?php _e('Background Color', $this->text_domain); ?></th>
 								<?php foreach($tag_config['color'] as $key => $value) { ?>
 								<td><input type="text" id="tag_bgcolor_step_<?php echo $key ?>" name="tag_bgcolor_step_<?php echo $key ?>" class="tag_bgcolor color-picker" value="<?php echo $value['bgcolor'] ?>" /></td>
 								<?php } ?>
 							</tr>
-		
+
 							<tr>
 								<th><?php _e('Border Radius', $this->text_domain); ?></th>
 								<?php foreach($tag_config['color'] as $key => $value) { ?>
 								<td><input type="text" id="tag_radius_step_<?php echo $key ?>" name="tag_radius_step_<?php echo $key ?>" class="tag_radius jquery-spinner" value="<?php echo $value['radius'] ?>" /></td>
 								<?php } ?>
 							</tr>
-		
+
 							<tr>
 								<th><?php _e('Padding', $this->text_domain); ?></th>
 								<?php foreach($tag_config['color'] as $key => $value) { ?>
 								<td><input type="text" id="tag_padding_step_<?php echo $key ?>" name="tag_padding_step_<?php echo $key ?>" class="tag_padding jquery-spinner" value="<?php echo $value['padding'] ?>" /></td>
 								<?php } ?>
 							</tr>
-		
+
 							<tr>
 								<th><?php _e('Size', $this->text_domain); ?></th>
 								<?php foreach($tag_config['size'] as $key => $value) { ?>
@@ -714,7 +714,7 @@ class sj2DTag extends Framework_Sujin_Plugin {
 								<td><input type="text" id="tag_color_over_step_<?php echo $key ?>" name="tag_color_over_step_<?php echo $key ?>" class="tag_color_over color-picker" value="<?php echo $value['color_over'] ?>" /></td>
 								<?php } ?>
 							</tr>
-		
+
 							<tr>
 								<th><?php _e('Background Color', $this->text_domain); ?> <?php _e('(Over)', $this->text_domain); ?></th>
 								<?php foreach($tag_config['color'] as $key => $value) { ?>
@@ -723,37 +723,37 @@ class sj2DTag extends Framework_Sujin_Plugin {
 							</tr>
 						</tbody>
 					</table>
-					
+
 					<h3 id="sjTagH3Preview"><?php _e('Preview', $this->text_domain); ?> <a href="#" onclick="sjSetPreview(); return false;" class="button"><?php _e('Make Preview', $this->text_domain); ?></a></h3>
 					<div id="sjTagPreview">
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Tag</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Cloud</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Wordpress</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">API</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">PHP</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">CMS</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Linux</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">한국어</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">English</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">日本語</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">le français</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Community</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Europe</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">North and South America</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Asia</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Africa</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Oceania</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Information</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Languages</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Italy</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Canada</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Haiti</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Brazil</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Egypt</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Southeast</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Lebanon</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Situation</a>, 
-						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Phonology</a>, 
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Tag</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Cloud</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Wordpress</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">API</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">PHP</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">CMS</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Linux</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">한국어</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">English</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">日本語</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">le français</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Community</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Europe</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">North and South America</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Asia</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Africa</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Oceania</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Information</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Languages</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Italy</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Canada</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Haiti</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Brazil</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Egypt</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Southeast</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Lebanon</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Situation</a>,
+						<a style="display:inline-block; text-decoration:none;" href="#" onclick="return false;">Phonology</a>,
 					</div>
 				</div>
 
