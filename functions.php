@@ -1,5 +1,5 @@
 <?php
-class sj2DTag extends Framework_Sujin_Plugin {
+class sj2DTag {
 	private $sj_tag_db_version = 1.0;
 	private $table_name;
 
@@ -36,7 +36,19 @@ class sj2DTag extends Framework_Sujin_Plugin {
 		$this->trigger_hooks();
 
 		$this->text_domain = "sujin-2d-tag-cloud";
-		parent::__construct();
+
+	}
+
+	private function redirect($url) {
+		if (!$url) $url = $_SERVER['HTTP_REFERER'];
+
+		if (function_exists("wp_redirect")) {
+			wp_redirect($url);
+			die;
+		}
+
+		echo '<script>window.location="' . $url . '"</script>';
+		die;
 	}
 
 	public function trigger_hooks() {
@@ -68,9 +80,6 @@ class sj2DTag extends Framework_Sujin_Plugin {
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		$error = dbDelta($sql);
 
-		$this->d($sql);
-		$this->d($error);
-
 		add_option("sj_tag_db_version", $this->sj_tag_db_version);
 	}
 
@@ -78,7 +87,6 @@ class sj2DTag extends Framework_Sujin_Plugin {
 		global $wpdb;
 
 		if($wpdb->get_var("show tables like '$this->table_name'") != $this->table_name) {
-			$this->d("Table is not exist. This Program will make table...");
 			$this->make_table();
 		}
 	}
@@ -174,7 +182,6 @@ class sj2DTag extends Framework_Sujin_Plugin {
 		';
 
 		$tags_count = $wpdb->get_results($query_count); // 포함수
-		$this->d($tags_count);
 
 		$query_hit = '
 			SELECT
@@ -198,7 +205,6 @@ class sj2DTag extends Framework_Sujin_Plugin {
 		';
 
 		$tags_hit = $wpdb->get_results($query_hit); // 히트수
-		$this->d($tags_hit);
 
 		$tags = array();
 
@@ -302,7 +308,7 @@ class sj2DTag extends Framework_Sujin_Plugin {
 			$i++;
 		}
 
-		return '<div class="tag_cloud sj_tagcloud_set_' . $this->set_number . '">' . implode($separator, $tags_out) . '</div><style>' . $this->print_css() . '</style>';
+		return '<div class="tag_cloud sj_tagcloud_set_' . $this->set_number . '">' . implode($this->tag_separator, $tags_out) . '</div><style>' . $this->print_css() . '</style>';
 	}
 
 	public function admin_enqueue_scripts() {
@@ -336,6 +342,10 @@ class sj2DTag extends Framework_Sujin_Plugin {
 		$output = 'body .sj_tagcloud_set_' . $this->set_number . ' a {' . $style . '}';
 
 		for($i=1; $i<=$tag_step; $i++) {
+			$style_color = '';
+			$style_size = '';
+			$style_color_over = '';
+
 			if (!empty($tag_config['color'][$i]['color']))
 				$style_color = 'color:' . $tag_config['color'][$i]['color'] . ' !important;';
 

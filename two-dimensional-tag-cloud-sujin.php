@@ -10,7 +10,6 @@
  * Text Domain: sujin-2d-tag-cloud
  */
 
-require_once('fw_sujin_puglin.php');
 require_once('functions.php');
 require_once('widget.php');
 require_once('shorttag.php');
