@@ -1,16 +1,13 @@
 <?php
-
-class SJ_Widget_TagCloud extends WP_Widget {
+class SJ2DTAG_widget extends WP_Widget {
 	public $widget_id = 'tag_cloud_widget_sujin';
 	public $widget_name;
 	public $widget_title;
 
 	function __construct() {
-		global $sj2DTag;
-
 		$this->widget_id = 'tag_cloud_widget_sujin';
-		$this->widget_name = __('2D Tag Cloud Widget by Sujin', $sj2DTag->text_domain);
-		$this->widget_title = __('2D Tag Cloud Widget by Sujin', $sj2DTag->text_domain);
+		$this->widget_name = __( '2D Tag Cloud', SJ2DTAG_functions::$text_domain );
+		$this->widget_title = __( '2D Tag Cloud', SJ2DTAG_functions::$text_domain );
 
 		$widget_ops = array(
 			'classname' => $this->widget_id,
@@ -22,26 +19,24 @@ class SJ_Widget_TagCloud extends WP_Widget {
 		);
 
 		parent::__construct($this->widget_id, $this->widget_name, $widget_ops, $control_ops);
-		$this->alt_option_name = 'widget_'.$this->id_base;
+		$this->alt_option_name = 'widget_' . $this->id_base;
 	}
 
-	function widget($args, $instance) {
-		global $wpdb, $sj2DTag;
-
+	function widget( $args, $instance ) {
 		extract($args, EXTR_SKIP);
 
-		$number = isset($instance['number']) ? $instance['number'] : 20;
 		$title = isset($instance['title']) ? $instance['title'] : '';
+
+		$number = isset($instance['number']) ? $instance['number'] : 20;
 		$separator = isset($instance['separator']) ? $instance['separator'] : '';
 		$sort = isset($instance['sort']) ? $instance['sort'] : 'DESC';
 		$set = isset($instance['set_id']) ? $instance['set_id'] : 0;
 
-		$sj2DTag->set_by_number($set);
-		$sj2DTag->set_cloud_option($number, $separator, $sort);
+		$options = compact( 'set', 'number', 'separator', 'sort' );
 
 		echo $before_widget;
-		echo $before_title . apply_filters('widget_title', $title) . $after_title;
-		echo $sj2DTag->get_tag_cloud();
+		echo $before_title . apply_filters( 'widget_title', $title ) . $after_title;
+		echo SJ2DTAG_functions::get_tag_cloud( $options );
 		echo $after_widget;
 	} // function widget($args, $instance)
 
@@ -58,26 +53,31 @@ class SJ_Widget_TagCloud extends WP_Widget {
 	} // function update($new_instance, $old_instance)
 
 	function form($instance) {
-		global $sj2DTag;
-
 		$number = isset($instance['number']) ? $instance['number'] : 20;
 		$title = isset($instance['title']) ? $instance['title'] : '';
 		$separator = isset($instance['separator']) ? $instance['separator'] : '';
 		$sort = isset($instance['sort']) ? $instance['sort'] : 'DESC';
 		$current_set_num = isset($instance['set_id']) ? $instance['set_id'] : 0;
 
-		$tag_set = get_option('sj_tag_set');
-		if (!$tag_set) $tag_set = array(0 => 'Default Set');
+		$options = get_option( 'SJ_2DTAG_CONFIG' );
+		$tag_set = array();
+		if ( !$options ) {
+			$tag_set = array(0 => 'Default Setting');
+		} else {
+			foreach( $options as $key => $value ) {
+				$tag_set[$key] = $value['title'];
+			}
+		}
 
 		?>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', $sj2DTag->text_domain); ?> :</label>
+				<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', SJ2DTAG_functions::$text_domain); ?> :</label>
 				<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" class="widefat" />
 			</p>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('set_id'); ?>"><?php _e('Set', $sj2DTag->text_domain); ?> :</label>
+				<label for="<?php echo $this->get_field_id('set_id'); ?>"><?php _e('Set', SJ2DTAG_functions::$text_domain); ?> :</label>
 				<select id="<?php echo $this->get_field_id('set_id'); ?>" name="<?php echo $this->get_field_name('set_id'); ?>">
 
 					<?php foreach($tag_set as $key=>$value) { ?>
@@ -90,22 +90,22 @@ class SJ_Widget_TagCloud extends WP_Widget {
 			</p>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('number'); ?>"><?php _e('Number of tags to show', $sj2DTag->text_domain); ?> :</label>
+				<label for="<?php echo $this->get_field_id('number'); ?>"><?php _e('Number of tags to show', SJ2DTAG_functions::$text_domain); ?> :</label>
 				<input id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo $number; ?>" class="widefat" />
 			</p>
 
 			<p>
-				<label for="<?php echo $this->get_field_id('separator'); ?>"><?php _e('Separator', $sj2DTag->text_domain); ?> :</label>
+				<label for="<?php echo $this->get_field_id('separator'); ?>"><?php _e('Separator', SJ2DTAG_functions::$text_domain); ?> :</label>
 				<input id="<?php echo $this->get_field_id('separator'); ?>" name="<?php echo $this->get_field_name('separator'); ?>" type="text" value="<?php echo $separator; ?>" class="widefat" />
 			</p>
 
 			<p>
-				<label><?php _e('Sort', $sj2DTag->text_domain); ?> :</label>
+				<label><?php _e('Sort', SJ2DTAG_functions::$text_domain); ?> :</label>
 
 				<select name="<?php echo $this->get_field_name('sort'); ?>" class="widefat">
-					<option value="DESC" <?php if ($sort == 'DESC') echo 'selected="selected"' ?>><?php _e('Put tags by descending order', $sj2DTag->text_domain); ?></option>
-					<option value="intersection" <?php if ($sort == 'intersection') echo 'selected="selected"' ?>><?php _e('Put tags 1 by 1. bigger, smaller, bigger, smaller...', $sj2DTag->text_domain); ?></option>
-					<option value="name" <?php if ($sort == 'name') echo 'selected="selected"' ?>><?php _e('Sort by name', $sj2DTag->text_domain); ?></option>
+					<option value="DESC" <?php if ($sort == 'DESC') echo 'selected="selected"' ?>><?php _e('Put tags by descending order', SJ2DTAG_functions::$text_domain); ?></option>
+					<option value="intersection" <?php if ($sort == 'intersection') echo 'selected="selected"' ?>><?php _e('Put tags 1 by 1. bigger, smaller, bigger, smaller...', SJ2DTAG_functions::$text_domain); ?></option>
+					<option value="name" <?php if ($sort == 'name') echo 'selected="selected"' ?>><?php _e('Sort by name', SJ2DTAG_functions::$text_domain); ?></option>
 				</select>
 			</p>
 
@@ -114,7 +114,11 @@ class SJ_Widget_TagCloud extends WP_Widget {
 }
 
 # Activate the Widget
-function sjActivateWidgetTagCloud() {
-	register_widget('SJ_Widget_TagCloud');
+function SJ2DTAG_activate_widget() {
+	register_widget( 'SJ2DTAG_widget' );
 }
-add_action('widgets_init', 'sjActivateWidgetTagCloud');
+
+
+
+
+

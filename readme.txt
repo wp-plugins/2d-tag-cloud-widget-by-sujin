@@ -1,55 +1,56 @@
 === 2D Tag Cloud by Sujin ===
 Contributors: sujin2f
-Donate link: http://www.sujinc.com/lab/2d-tag-cloud-widget/
+Donate link: http://www.sujinc.com/gallery/2d-tag-cloud-widget/
 Tags: tag, cloud
 Requires at least: 2.8
-Tested up to: 3.8
-Stable tag: 4.1.1
+Tested up to: 3.9
+Stable tag: 5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-"2D Tag Cloud by Sujin" is one of the Wordpress widget, which makes tag-cloud with two visual value.
+"2D Tag Cloud by Sujin" is a Wordpress plugin which makes tag-cloud with two visual values.
 
 == Description ==
 
-"2D Tag Cloud by Sujin" is one of the Wordpress widget, which makes tag-cloud with two visual value.
+= English =
+This is a Wordpress plugin which makes tag-cloud with two visual values.
 For example, size means that how many times have clicked the tag, and color means how many posts has had the tag.
 This is very simple way to display your tag-cloud more pretty and more highly decorative following the order.
 You can select color and size on admin page.
 
+You can use shortcode also. See Frequently Asked Questions.
+
+Official Page : <a href="http://www.sujinc.com/gallery/2d-tag-cloud-widget/">2D Tag Cloud by Sujin</a>
+Running Sample : <a href="http://www.sujinc.com/">Sidebar of sujinc.com</a>
+
+= Korean =
 2D 태그 클라우드는 두가자의 기준에 의해 글자의 색상과 크기를 달리해서 태그를 표시하는 플러그인이에요.
 많이 클릭된 태그와 많이 포함된 태그, 이 두 가지 기준에 의해 한 태그는 각각 다른 색상과 크기를 가지죠.
 어떻게 정렬하는지에 따라 매우 불규칙한 모양이 형성될 수 있어요.
 색상과 크기는 어드민에서 지정해주세요~ :)
 
-You can use shortcode also. See Frequently Asked Questions.
-
 숏코드를 사용해서 표시를 해줄 수도 있어요. Frequently Asked Questions을 봐주세요~
 
-Official Page : <a href="http://www.sujinc.com/lab/2d-tag-cloud-widget/">2D Tag Cloud by Sujin</a>
+공식페이지 : <a href="http://www.sujinc.com/gallery/2d-tag-cloud-widget/">공식페이지</a>
+실행 예 : <a href="http://www.sujinc.com/">제 블로그의 사이드바에서 보실 수 있어요.</a>
 
-Running Sample : <a href="http://www.sujinc.com/">Footer of sujinc.com / 제 블로그의 푸터에서 보실 수 있어요.</a>
 
 == Installation ==
 
 = Installation =
-1. Download the plugin zip package and extract it (플러그인을 다운로드하여 압축을 해제해주세요)
-1. Put the folder named "two-dimensional-tag-cloud-sujin" under /wp-content/plugins/ directory (플러그인 디렉토리에 넣어주세요)
-1. Go to the plugins page in your Wordpress admin panel and click "Activate" (플러그인 관리 페이지에서 활성화 시키세요)
+1. Download the plugin zip package and extract it.
+1. Put the folder named "two-dimensional-tag-cloud-sujin" under /wp-content/plugins/ directory
+1. Go to the plugins page in your Wordpress admin panel and click "Activate"
 
 = Global Setting =
-1. Go to "2D Tag Cloud" under the "Settings" (세팅의 "2D Tag Cloud"로 이동해주세요)
-1. Set Tag Step and Method (Step과 Method를 설정해주세요)
-1. Changing the step selector, you'll see the step marker appearing or disappearing (Step을 바꾸시면 표가 늘었다 줄었다 하는 걸 보실 수 있어요)
-1. On step marker, set custom color and size (색상과 크기를 설정하세요)
-   * Higher-level step means more valued (View / Including) (높은 숫자의 Step의 스타일대로 많이 포함되거나 많이 클릭된 태그가 표시됩니다)
-1. Click "Make Preview" to preview your tag cloud. (Make Preview 버튼을 클릭하셔서 미리보기를 하실 수 있어요)
+1. Go to "2D Tag Cloud" under the "Settings"
+1. Make your own setting.
 
 = Widget Setting =
-1. Go to "Widgets" under the "Appearance" menu (위젯 메뉴로 가세요)
-1. Drag "2D Tag Cloud Widget by Sujin" to the widget holder you want to set (위젯을 끌어다 놓습니다)
-1. Set title, quantity and separator (타이틀과 태그의 수량과 구분자를 입력하실 수 있어요)
-1. If you change sort setting, you will get a different shape of tag cloud. (Sort를 변경해서 태그의 정렬 방법을 결정하실 수 있어요)
+1. Go to "Widgets" under the "Appearance" menu
+1. Drag "2D Tag Cloud Widget by Sujin" to the widget holder you want to set
+1. Set title, quantity and separator
+1. If you change sort setting, you will get a different shape of tag cloud.
 
 NOTE : At the early stage of applying this plugin, you cannot perceive a property of View step on your tag-cloud.
 When clicked the tag or displayed the post which has the tag, the View Counts will be increased.
@@ -104,6 +105,11 @@ shortcode is [tag2d] you can controll with 3 attributes.
 
 == Changelog ==
 
+= 5.0 =
+* Test with all version of Wordpress; From 2.8 to 3.9
+* Fix some errors
+* Re-design
+
 = 4.1.1 =
 * Fix activation hook
 
@@ -155,3 +161,39 @@ shortcode is [tag2d] you can controll with 3 attributes.
 
 = 1.0 =
 * Original Version
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TODO
+업그레이드 테스트
+브라우저별 테스트
+리드미 파일
+캡쳐
+플러그인 사이트 정비
+
+
+
+
+
+
+
+
+
+
+

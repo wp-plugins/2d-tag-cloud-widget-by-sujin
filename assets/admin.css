@@ -1,12 +1,26 @@
-.sjTag h2 {margin-bottom:20px;}
-.sjTag .donation {position:absolute; right:0; border:1px solid #999999; padding:5px; margin-right:15px;}
+#SJ2DTAG #donation .inside {text-align:center; padding-top:10px;}
 
-.sjTag .col_wrapper {clear:both; margin-right:20px;}
-.sjTag .col_wrapper label {display:block; width:120px; float:left; margin-bottom:20px;}
+#SJ2DTAG #publish #publish .dashicons {line-height:26px;}
 
-.sjTag #sjTagTable input {width:100%;}
+#SJ2DTAG .delete_column {color:#cc2e2e; cursor:pointer;}
 
-.sjTag .iris-picker {position:absolute; z-index:1000000; margin-left:-70px;}
+#SJ2DTAG_tag_config thead th {text-align:center;}
+#SJ2DTAG_tag_config tbody td {text-align:center;}
+
+#SJ2DTAG_tag_config thead th > span {display:inline-block;}
+
+#SJ2DTAG_tag_config .ui-spinner-input {width:50px;}
+#SJ2DTAG_tag_config #steps {width:100px;}
+
+#SJ2DTAG_tag_config input.color_picker {width:70px;}
+#SJ2DTAG_tag_config input.jquery-spinner {width:42px;}
+
+#SJ2DTAG_tags .buttons {margin-top:10px; overflow:auto;}
+#SJ2DTAG_tags .buttons #add_step_next {float:right;}
+#SJ2DTAG_tags .buttons #add_step_prev {float:left;}
+#SJ2DTAG_tags .buttons .button .dashicons {line-height:26px;}
+
+#SJ2DTAG #preview .inside a {display:inline-block;}
 
 .ui-spinner-up {top:0;}
 .ui-spinner-button {cursor:default; display:block; font-size:0.5em; height:50%; margin:0; overflow:hidden; padding:0; position:absolute; right:0; text-align:center; width:16px;}
@@ -15,13 +29,3 @@
 .ui-spinner-button {cursor:default; font-size:0.5em; text-align:center;}
 .ui-spinner {display:inline-block; overflow:hidden; padding:0; position:relative; vertical-align:middle;}
 .ui-spinner-down {bottom:0;}
-
-#sjTagPreview {clear:both; display:block; width:500px; border:1px solid #999999; padding:5px;}
-
-.sjTag .desc {margin:1em 0 1em 125px;}
-
-.sjTag #underline {float:left; margin-right:10px;}
-.sjTag #label_underline {width:auto;}
-
-.sjTag #debug {float:left; margin-right:10px;}
-.sjTag #label_debug {width:auto;}
