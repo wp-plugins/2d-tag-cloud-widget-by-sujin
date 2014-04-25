@@ -67,16 +67,6 @@ add_action( 'wp', array( 'SJ2DTAG_functions', 'increase_count' ) );
 add_shortcode('tag2d', 'SJ2DTAG_shortcode');
 
 
-function p( $arr ) {
-	echo '<pre>';
-	print_r( $arr );
-	echo '</pre>';
-}
-
-
-
-
-
 
 
 
