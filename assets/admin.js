@@ -5,6 +5,8 @@
  */
 
 jQuery(document).ready(function($){
+	postboxes.add_postbox_toggles();
+
 	// 스피너 구동!
 	function SJ2DTAG_BindSpinners() {
 		if( !$.ui ) return false;

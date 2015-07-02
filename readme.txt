@@ -1,109 +1,84 @@
-=== 2D Tag Cloud by Sujin ===
+=== 2D Tag Cloud ===
 Contributors: sujin2f
-Donate link: http://www.sujinc.com/gallery/2d-tag-cloud-widget/
+Donate link: http://www.sujinc.com/donation/
 Tags: tag, cloud
 Requires at least: 2.8
-Tested up to: 3.9
-Stable tag: 5.0
+Tested up to: 4.2.2
+Stable tag: 6.0.0
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-"2D Tag Cloud by Sujin" is a Wordpress plugin which makes tag-cloud with two visual values.
+2D Tag Cloud makes a favulous tag cloud with two visual values: hit and used count.
 
 == Description ==
+Is your tag too simple? 2D Tag Cloud helps you improve your tag style.
+It makes a tag cloud with two visual values: hit and used count.
 
-= English =
-This is a Wordpress plugin which makes tag-cloud with two visual values.
-For example, size means that how many times have clicked the tag, and color means how many posts has had the tag.
-This is very simple way to display your tag-cloud more pretty and more highly decorative following the order.
-You can select color and size on admin page.
+For instance, the size represents that how many times the tag have clicked,
+and the colour represents how many posts have had the tag.
 
-You can use shortcode also. See Frequently Asked Questions.
-
-Official Page : <a href="http://www.sujinc.com/gallery/2d-tag-cloud-widget/">2D Tag Cloud by Sujin</a>
-Running Sample : <a href="http://www.sujinc.com/">Sidebar of sujinc.com</a>
-
-= Korean =
-2D 태그 클라우드는 두가자의 기준에 의해 글자의 색상과 크기를 달리해서 태그를 표시하는 플러그인이에요.
+2D 태그 클라우드는 두가지  기준에 의해 글자의 색상과 크기를 달리해서 태그를 표시하는 플러그인이에요.
 많이 클릭된 태그와 많이 포함된 태그, 이 두 가지 기준에 의해 한 태그는 각각 다른 색상과 크기를 가지죠.
-어떻게 정렬하는지에 따라 매우 불규칙한 모양이 형성될 수 있어요.
-색상과 크기는 어드민에서 지정해주세요~ :)
-
-숏코드를 사용해서 표시를 해줄 수도 있어요. Frequently Asked Questions을 봐주세요~
-
-공식페이지 : <a href="http://www.sujinc.com/gallery/2d-tag-cloud-widget/">공식페이지</a>
-실행 예 : <a href="http://www.sujinc.com/">제 블로그의 사이드바에서 보실 수 있어요.</a>
-
+어떻게 정렬하는지에 따라 다양한 태그 구름이 형성될 수 있지요 :D
+색상과 크기는 어드민에서 지정해주세요~
 
 == Installation ==
+= From your WordPress dashboard =
+1. Visit 'Plugins > Add New'
+2. Search for '2D Tag Cloud'
+3. Activate 2D Tag Cloud from your Plugins page.
 
-= Installation =
-1. Download the plugin zip package and extract it.
-1. Put the folder named "two-dimensional-tag-cloud-sujin" under /wp-content/plugins/ directory
-1. Go to the plugins page in your Wordpress admin panel and click "Activate"
+= From WordPress.org =
+1. Download 2D Tag Cloud.
+2. Upload the 'two-dimensional-tag-cloud-sujin' directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
+3. Activate 2D Tag Cloud from your Plugins page.
 
 = Global Setting =
 1. Go to "2D Tag Cloud" under the "Settings"
-1. Make your own setting.
+2. Make your own settings.
 
-= Widget Setting =
+= Widget =
 1. Go to "Widgets" under the "Appearance" menu
-1. Drag "2D Tag Cloud Widget by Sujin" to the widget holder you want to set
-1. Set title, quantity and separator
-1. If you change sort setting, you will get a different shape of tag cloud.
+2. Drag "2D Tag Cloud Widget" to the widget holder you want to set
 
-NOTE : At the early stage of applying this plugin, you cannot perceive a property of View step on your tag-cloud.
+== Shortcode ==
+You can use a shortcode to display a tag cloud in your post/page or .php files.
+shortcode is [tag2d] you with 4 attributes.
+
+* number : Number of tags (Default : 30)
+* separator : Separator between each tags (Default : None)
+* set : Name of your Setting (Default : None)
+* sort : Order of tags.
+ - alphabetical : Alphabetical order
+ - 1by1 : Blending most used and most viewed one by one
+ - intersection : Blending most and least values one by one
+
+= Note =
+At the early stage of applying this plugin, you cannot perceive a property of View step on your tag cloud.
 When clicked the tag or displayed the post which has the tag, the View Counts will be increased.
 
-주의 : 플러그인을 설치하신 딱! 고 당시에는 클릭 수로 설정된 요소(크기나 색상)가 모두 똑같을 거에요. 워드프레스는 포스트의 View를 세거나 하는 기능이 없어요.
+플러그인을 설치하신 딱! 고 당시에는 클릭 수로 설정된 요소(크기나 색상)가 모두 똑같을 거에요. 워드프레스는 포스트의 View를 세거나 하는 기능이 없어요.
 많은 사람들이 여러분의 블로그를 방문해서 태그를 클릭하거나 태그가 포함된 포스트를 보면 따로 설정한 카운트가 올라가면서 그 요소가 변경될 거에요~ :)
 
 == Frequently Asked Questions ==
 
-= Will this plugin replace previous tag cloud? (이전 태그 클라우드가 변경되나요?) =
+= Will this plugin replace previous tag cloud? =
 
-No. You have to put our widget to your widget holder. (아뇨. 위젯 홀더에 따로 준비된 위젯을 넣어주세요.)
-
-== Shortcode ==
-
-You can use a shortcode to display a tag-cloud in your post/page or .php files.
-shortcode is [tag2d] you can controll with 3 attributes.
-
-* number : Number of tags to show. You MUST set numeric value.
-* separator : Put separator in between each tag.
-* set : Put set name.
-* sort : You can set a sort to one of those three value.
-
- - intersection : This plugin sort tags on 2-way (Click count and Having count). And put tags cross by different order (Bigger, Smaller, Bigger, Smaller...)
-
- - DESC : Same as 'intersection', but put tags by descending order (Bigger, Bigger, Bigger, Bigger...)
-
- - name : Put tags by name.
-
-== Shortcode (Kor) ==
-
-숏코드를 사용해서 태그 클라우드를 표시할 수도 있어요. Post나 Page 혹은 php 파일을 편집해서 2D 태그를 구할 수 있죠.
-숏코드는 [tag2d] 형식이구요. 세 개의 인자를 가집니다. (안 써도 상관 없어요)
-
-* number : 태그의 표시 수에요.
-* separator : 태그 사이에 넣을 구분자죠.
-* set : 저장한 세팅 값을 넣어주세요.
-* sort : 아래 세 개의 값 중 하나를 넣으세요.
-
- - intersection : 크고 작은 값을 하나씩 교차해서 표시해요. 포함 많은 것, 클릭 적은 것, 포함 그 다음으로 많은 것, 클릭 그 다음으로 적은 것...
-
- - DESC : 큰 값을 먼저 표시해요. 포함 많은 것, 클릭 많은 것, 포함 많은 것, 클릭 많은 것...
-
- - name : 이름에 따라 정렬합니다.
-
+No. You have to put our widget to your widget holder.
 
 == Screenshots ==
 
-1. Widget Setting / 위젯 세팅
-2. Global Setting Page / 전역 세팅
-3. Result / 결과
+1. **Widget Setting**
+2. **Global Setting Page**
+3. **Result**
 
 == Changelog ==
+
+= 6.0.0 =
+* Tested up to 4.2.2
+* Code Reorganizing
+* Fix shortcode errors
+* Add shortcode metabox
 
 = 5.0 =
 * Test with all version of Wordpress; From 2.8 to 3.9
@@ -161,39 +136,3 @@ shortcode is [tag2d] you can controll with 3 attributes.
 
 = 1.0 =
 * Original Version
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-TODO
-업그레이드 테스트
-브라우저별 테스트
-리드미 파일
-캡쳐
-플러그인 사이트 정비
-
-
-
-
-
-
-
-
-
-
-

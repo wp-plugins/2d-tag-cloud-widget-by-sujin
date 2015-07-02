@@ -1,3 +1,17 @@
+#SJ2DTAG #shortcode {font-size:15px;}
+#SJ2DTAG #shortcode .square_bracket,
+#SJ2DTAG #shortcode .option
+{color:#ba4141}
+#SJ2DTAG #shortcode .tag {color:#4157ba}
+#SJ2DTAG #shortcode .option_name {color:#0d520c}
+#SJ2DTAG #shortcode .quot,
+#SJ2DTAG #shortcode .equal
+{color:#888888}
+
+#SJ2DTAG #shortcode ul {margin-left:40px;  list-style-type:disc;}
+#SJ2DTAG #shortcode ul ul {list-style-type:circle; margin-top:5px;}
+
+
 #SJ2DTAG #donation .inside {text-align:center; padding-top:10px;}
 
 #SJ2DTAG #publish #publish .dashicons {line-height:26px;}
