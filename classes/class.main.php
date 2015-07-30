@@ -117,6 +117,8 @@ class SJ2DTAG_main {
 			}
 		}
 
+		$tags = array_slice( $tags, 0, $options['number'] );
+
 		# 한 자리에 몰아넣는 배열을 만든다, 민/맥스도 뽑고 각각의 녀석에게 스타일도 부여하기 위해
 		$hit = $count = $tags_out = array();
 		foreach ($tags as $tag) {

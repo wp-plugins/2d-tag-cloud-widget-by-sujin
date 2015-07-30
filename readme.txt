@@ -4,7 +4,7 @@ Donate link: http://www.sujinc.com/donation/
 Tags: tag, cloud
 Requires at least: 2.8
 Tested up to: 4.2.2
-Stable tag: 6.0.0
+Stable tag: 6.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,6 +73,8 @@ No. You have to put our widget to your widget holder.
 3. **Result**
 
 == Changelog ==
+= 6.0.1 =
+* Fix Number of Tags Error
 
 = 6.0.0 =
 * Tested up to 4.2.2

@@ -3,7 +3,7 @@
  * Plugin Name: 2D Tag Cloud
  * Plugin URI: http://www.sujinc.com/gallery/2d-tag-cloud-widget/
  * Description: 2D Tag Cloud makes a favulous tag cloud with two visual values: hit and used count. 두가자의 기준에 의해 글자의 색상과 크기를 달리해서 태그를 표시하는 플러그인입니다.
- * Version: 6.0.0
+ * Version: 6.0.1
  * Author: Sujin 수진 Choi
  * Author URI: http://www.sujinc.com/
  * License: GPLv2 or later
